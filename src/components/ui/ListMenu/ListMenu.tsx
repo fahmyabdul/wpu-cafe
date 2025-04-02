@@ -40,18 +40,19 @@ const ListMenu = () => {
         <div className="grid grid-cols-2 lg:grid-cols-6 w-full gap-4">
             {isLoading ? (
                 <>
-                {[...Array(6)].map((x)=>
+                {[...Array(6)].map((_,i)=>
                 (
                     <Card
-                        key={`menu-${x}`}
-                        shadow="sm"
+                        key={`menu-${i}`}
+                        shadow="none"
+                        className="shadow-md rounded-xl"
                     >
                         <CardBody 
                             className="overflow-visible p-0"
                         >
                             <Skeleton>
                                 <Image
-                                    className="w-full object-cover h-[200px]"
+                                    className="w-full object-cover h-[200px] rounded-b-none"
                                     radius="lg"
                                     shadow="sm"
                                     width="100%"
@@ -77,7 +78,8 @@ const ListMenu = () => {
                 <Card
                     key={item.id}
                     isPressable
-                    shadow="sm"
+                    shadow="none"
+                    className="shadow-md rounded-xl"
                     // onPress={()=> console.log(`Pressed ${item.name}`)}
                 >
                     <CardBody 
@@ -85,9 +87,10 @@ const ListMenu = () => {
                     >
                         <Image
                             alt={item.name}
+                            aria-label={"menuimg-"+item.id}
                             className="w-full object-cover h-[200px] rounded-b-none"
                             radius="lg"
-                            shadow="sm"
+                            shadow="none"
                             src={item.image_url}
                             width="100%"
                         />
@@ -95,7 +98,7 @@ const ListMenu = () => {
                     <CardFooter
                         className="flex flex-col text-small justify-between"
                     >
-                        <p>{item.name}</p>
+                        <p className="text-md">{item.name}</p>
                         <p className="text-teal-600 font-bold">${item.price}</p>
                     </CardFooter>
                 </Card>

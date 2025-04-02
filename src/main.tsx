@@ -7,7 +7,9 @@ import './styles/globals.css'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <HeroUIProvider>
-      <App />
+      <main className='light text-foreground bg-background'>
+        <App />
+      </main>
     </HeroUIProvider>
   </StrictMode>,
 )

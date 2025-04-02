@@ -31,7 +31,7 @@ const FeaturedMenu = () => {
 
     return (
         <div
-            className="flex w-full"
+            className="flex w-full shadow-md rounded-xl"
         >
             {isLoading ? (
                 <Card
@@ -46,14 +46,14 @@ const FeaturedMenu = () => {
                             <div className="relative col-span-6 md:col-span-4">
                                 <Skeleton className="rounded-lg">
                                     <Image
-                                        className="w-full object-cover h-[300px]"
+                                        className="w-full object-cover h-[230px] lg:h-[300px]"
                                         radius="lg"
                                         shadow="sm"
                                         width="100%"
                                     />
                                 </Skeleton>
                             </div>
-                            <div className="flex flex-col col-span-6 md:col-span-8 gap-3 lg:ml-5">
+                            <div className="flex flex-col col-span-6 md:col-span-8 gap-3 ml-5 mb-10 lg:mb-0">
                                 <Skeleton className="text-2xl text-bold w-4/12 h-6">
                                     <h1 className="text-2xl font-bold">Name</h1>
                                 </Skeleton>
@@ -79,10 +79,12 @@ const FeaturedMenu = () => {
                 spaceBetween={50}
                 slidesPerView={1}
                 loop={true}
+                autoplay={true}
                 navigation
                 pagination={{ clickable: true }}
-                // onSwiper={(swiper) => console.log(swiper)}
+                onSwiper={(swiper) => console.log(swiper)}
                 // onSlideChange={() => console.log('slide change')}
+                // onClick={(swiper) =>{ console.log(swiper)}}
             >
                 {!isLoading && menus.map((item: IMenu)=>(
                     <SwiperSlide>
@@ -101,14 +103,14 @@ const FeaturedMenu = () => {
                                     <div className="relative col-span-6 md:col-span-4">
                                         <Image
                                             alt={item.name}
-                                            className="w-full object-cover h-[300px]"
+                                            className="w-full object-cover h-[230px] lg:h-[300px]"
                                             radius="lg"
                                             shadow="sm"
                                             src={item.image_url}
                                             width="100%"
                                         />
                                     </div>
-                                    <div className="flex flex-col col-span-6 md:col-span-8 gap-3 lg:ml-5">
+                                    <div className="flex flex-col col-span-6 md:col-span-8 gap-3 ml-5 mb-10 lg:mb-0">
                                         <h1 className="text-2xl font-bold">{item.name}</h1>
                                         <p className="text-default-500 text-lg lg:text-xl">
                                             Only&nbsp;

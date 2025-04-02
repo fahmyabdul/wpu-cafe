@@ -1,5 +1,5 @@
 import { Button, Input } from "@heroui/react";
-import { HiShoppingCart } from "react-icons/hi2";
+import { HiOutlineEye } from "react-icons/hi2";
 import ListMenu from "../../components/ui/ListMenu";
 import FeaturedMenu from "../../components/ui/FeaturedMenu/FeaturedMenu";
 import MainLayout from "../../components/layouts/MainLayout/MainLayout";
@@ -15,7 +15,7 @@ const Home = () => {
                 className="flex flex-col w-full pl-6 pr-6 lg:pl-0 lg:pr-0 lg:w-8/12 gap-6"
             >
                 <div
-                    className="flex w-full items-center justify-center p-5"
+                    className="flex hidden w-full items-center justify-center p-5"
                 >
                     <h1
                         className="font-bold text-xl text-teal-600"
@@ -24,7 +24,7 @@ const Home = () => {
                     </h1>
                 </div>
                 <div
-                    className="flex w-full"
+                    className="flex w-full items-center"
                 >
                     <h1
                         className="font-bold text-xl text-teal-600"
@@ -38,23 +38,24 @@ const Home = () => {
                     <FeaturedMenu/>
                 </div>
                 <div
-                    className="grid grid-cols-2 w-full align-middle"
+                    className="grid grid-cols-2 w-full"
                 >
-                    <h1
-                        className="font-bold text-xl text-teal-600"
-                    >
-                        Our Menus
-                    </h1>
-                    <div className="flex justify-end">
+                    <div className="flex w-fit items-center">
+                        <h1
+                            className="font-bold text-xl text-teal-600"
+                        >
+                            Our Menus
+                        </h1>
+                    </div>
+                    <div className="flex justify-end w-full items-center">
                         <Input
-                            placeholder="Cari di WPU Cafe"
+                            placeholder="Search in WPU Cafe"
                             aria-label="input-search"
-                            width={100}
                             onChange={(e)=> {
                                     search(e.target.value);
                                 }
                             }
-                            className="flext lg:w-9/12"
+                            className="flex w-full lg:w-9/12"
                         />
                     </div>
                 </div>
@@ -66,8 +67,8 @@ const Home = () => {
                 <div
                     className="flex w-full"
                 >
-                    <Button color="success" className="w-full p-5 lg:p-7 text-white lg:text-lg">
-                        Order Now <HiShoppingCart className="lg:text-2xl"/>
+                    <Button color="success" variant="solid" className="w-full p-5 lg:p-7 text-white lg:text-lg">
+                    <HiOutlineEye size={25} />See Everything We Had To Offer
                     </Button>
                 </div>
             </div>
