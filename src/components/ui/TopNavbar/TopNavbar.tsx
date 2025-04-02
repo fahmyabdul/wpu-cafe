@@ -49,7 +49,7 @@ const TopNavbar = () => {
                     "data-[active=true]:after:bottom-0",
                     "data-[active=true]:after:left-0",
                     "data-[active=true]:after:right-0",
-                    "data-[active=true]:after:h-[2px]",
+                    "data-[active=true]:after:h-[3px]",
                     "data-[active=true]:after:rounded-[2px]",
                     "data-[active=true]:after:bg-teal-600",
                 ]
@@ -60,7 +60,7 @@ const TopNavbar = () => {
                 className="sm:hidden"
             />
             <NavbarBrand>
-                <Link href="/" className="font-semibold lg:text-lg text-teal-600">WPU Cafe</Link>
+                <Link href="/" className="font-semibold text-lg lg:text-xl bg-gradient-to-r bg-clip-text from-sky-600 to-teal-400 text-transparent">WPU Cafe</Link>
             </NavbarBrand>
             <NavbarContent 
                 className="hidden sm:flex gap-6" 

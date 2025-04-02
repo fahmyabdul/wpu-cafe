@@ -4,6 +4,7 @@ import ListMenu from "../../components/ui/ListMenu";
 import FeaturedMenu from "../../components/ui/FeaturedMenu/FeaturedMenu";
 import MainLayout from "../../components/layouts/MainLayout/MainLayout";
 import useSearchStore from "../../stores/MenuSearchStore";
+import { FaMagnifyingGlass } from "react-icons/fa6";
 
 
 const Home = () => {
@@ -27,7 +28,7 @@ const Home = () => {
                     className="flex w-full items-center"
                 >
                     <h1
-                        className="font-bold text-xl text-teal-600"
+                        className="font-bold text-2xl bg-gradient-to-r bg-clip-text from-sky-600 to-teal-400 text-transparent"
                     >
                         Featured
                     </h1>
@@ -42,7 +43,7 @@ const Home = () => {
                 >
                     <div className="flex w-fit items-center">
                         <h1
-                            className="font-bold text-xl text-teal-600"
+                            className="font-bold text-2xl bg-gradient-to-r bg-clip-text from-sky-600 to-teal-400 text-transparent"
                         >
                             Our Menus
                         </h1>
@@ -51,9 +52,18 @@ const Home = () => {
                         <Input
                             placeholder="Search in WPU Cafe"
                             aria-label="input-search"
+                            type="search"
+                            isClearable
+                            onClear={()=> {
+                                search("");
+                                }
+                            }
                             onChange={(e)=> {
                                     search(e.target.value);
                                 }
+                            }
+                            startContent={
+                                <FaMagnifyingGlass className="text-default-400 pointer-events-none flex-shrink-0 mr-2"/>
                             }
                             className="flex w-full lg:w-9/12"
                         />
