@@ -1,13 +1,13 @@
-import HomeLayout from "../../components/layouts/HomeLayout/HomeLayout";
+import MainLayout from "../../components/layouts/MainLayout/MainLayout";
 
 
 const About = () => {
     return (
-        <HomeLayout title="Tentang Kami">
+        <MainLayout title="Tentang Kami">
             <div>
                 Tentang Kami
             </div>
-        </HomeLayout>
+        </MainLayout>
     );
 };
 

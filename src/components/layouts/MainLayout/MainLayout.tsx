@@ -8,7 +8,7 @@ interface PropTypes {
     children: ReactNode;
 }
 
-const HomeLayout = (props: PropTypes) => {
+const MainLayout = (props: PropTypes) => {
     const {
         title,
         children,
@@ -21,7 +21,7 @@ const HomeLayout = (props: PropTypes) => {
     return (
         <>
             <TopNavbar/>
-            <div className="flex flex-col min-h-screen min-w-full items-center gap-5 mt-5">
+            <div className="flex flex-col min-h-screen min-w-full items-center mt-5">
                 {children}
             </div>
             <Footer/>
@@ -29,4 +29,4 @@ const HomeLayout = (props: PropTypes) => {
     );
 };
 
-export default HomeLayout;
+export default MainLayout;
