@@ -76,7 +76,7 @@ const TopNavbar = () => {
                     </NavbarItem>
                 ))}
             </NavbarContent>
-            <NavbarContent className="hidden sm:flex" justify="end">
+            <NavbarContent justify="end">
                 <NavbarItem className="flex items-center gap-2">
                     <Button variant="flat" aria-label="cart-btn" isIconOnly>
                         <HiShoppingCart size={20} />
@@ -89,7 +89,7 @@ const TopNavbar = () => {
                     >
                         {isDark ? (<HiOutlineSun size={20} />): (<HiOutlineMoon size={20} />)}
                     </Button>
-                    <Button as={Link} className="bg-teal-600 text-white" href="#" variant="flat">
+                    <Button as={Link} className="bg-teal-600 text-white hidden sm:flex" href="/login" variant="flat">
                         <HiArrowLeftEndOnRectangle size={20}/>Login
                     </Button>
                 </NavbarItem>
@@ -103,7 +103,7 @@ const TopNavbar = () => {
                     </NavbarMenuItem>
                 ))}
                 <NavbarMenuItem>
-                    <Link href="#">
+                    <Link href="/login">
                         <HiArrowLeftEndOnRectangle size={20}/>Login
                     </Link>
                 </NavbarMenuItem>

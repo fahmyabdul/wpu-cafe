@@ -19,7 +19,7 @@ const MainLayout = (props: PropTypes) => {
     }, [title]);
 
     return (
-        <div className="flex flex-col min-h-screen  min-w-full">
+        <div className="flex flex-col min-h-screen min-w-full">
             <TopNavbar/>
             <div className="flex flex-col items-center mt-5 mb-5 lg:mt-8 lg:mb-8">
                 {children}
