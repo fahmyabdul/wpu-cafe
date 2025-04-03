@@ -1,4 +1,4 @@
-import { Button, Card, Image, Link } from "@heroui/react";
+import { Button, Card, Chip, Image, Link } from "@heroui/react";
 import MainLayout from "../../components/layouts/MainLayout/MainLayout";
 import me from "../../assets/me-sketch-1.png";
 import { FaGithub, FaInstagram, FaLinkedin, FaRegEnvelope, FaTelegram } from "react-icons/fa6";
@@ -49,7 +49,7 @@ const About = () => {
                                     target="blank"
                                 >
                                     <Button
-                                        className="text-tiny text-white bg-slate-600"
+                                        className="text-tiny text-white bg-slate-500"
                                         color="default"
                                         radius="sm"
                                         size="lg"
@@ -66,7 +66,7 @@ const About = () => {
                                     target="blank"
                                 >
                                     <Button
-                                        className="text-tiny text-white bg-black"
+                                        className="text-tiny text-white bg-black dark:bg-gray-700"
                                         color="default"
                                         radius="sm"
                                         size="lg"
@@ -156,38 +156,38 @@ const About = () => {
                             </div>
                             <h1 className="font-bold mt-2">Used Tech Stack</h1>
                             <div className="grid grid-rows-8 grid-flow-col gap-1 text-sm">
-                                <div className="text-success-700">• Golang</div>
-                                <div className="text-success-700">• Gin Gonic</div>
-                                <div className="text-success-700">• GORM</div>
-                                <div className="text-success-700">• sqlx</div>
-                                <div className="text-success-700">• gRPC</div>
-                                <div className="text-success-700">• JavaScript</div>
-                                <div className="text-success-700">• TypeScript</div>
-                                <div className="text-success-700">• NodeJS</div>
-                                <div className="text-success-700">• ExpressJS</div>
-                                <div className="text-success-700">• MongoDB</div>
-                                <div className="text-success-700">• MySQL</div>
-                                <div className="text-success-700">• PostgreSQL</div>
-                                <div className="text-success-700">• Redis</div>
-                                <div className="text-success-700">• Linux</div>
-                                <div className="text-success-700">• Docker</div>
-                                <div className="text-success-700">• Kubernetes</div>
-                                <div className="text-success-700">• Google Cloud Platform</div>
-                                <div className="text-success-700">• Google Cloud Build</div>
-                                <div className="text-success-700">• Prometheus</div>
-                                <div className="text-success-700">• Apache Kafka</div>
-                                <div className="text-success-700">• Firebase Cloud Messaging</div>
-                                <div className="text-warning-600">• Gorilla Mux</div>
-                                <div className="text-warning-600">• NestJS</div>
-                                <div className="text-warning-600">• Gitlab CI/CD</div>
-                                <div className="text-warning-600">• Red Hat OpenShift</div>
-                                <div className="text-warning-600">• BadgerDB</div>
-                                <div className="text-danger-600">• Perl</div>
-                                <div className="text-danger-600">• Python</div>
-                                <div className="text-danger-600">• PHP</div>
-                                <div className="text-danger-600">• SQLite</div>
-                                <div className="text-danger-600">• GoLevelDB</div>
-                                <div className="text-danger-600">• Oracle</div>
+                                <Chip className="bg-success-500 dark:bg-success-400 text-white">Golang</Chip>
+                                <Chip className="bg-success-500 dark:bg-success-400 text-white">Gin Gonic</Chip>
+                                <Chip className="bg-success-500 dark:bg-success-400 text-white">GORM</Chip>
+                                <Chip className="bg-success-500 dark:bg-success-400 text-white">sqlx</Chip>
+                                <Chip className="bg-success-500 dark:bg-success-400 text-white">gRPC</Chip>
+                                <Chip className="bg-success-500 dark:bg-success-400 text-white">JavaScript</Chip>
+                                <Chip className="bg-success-500 dark:bg-success-400 text-white">TypeScript</Chip>
+                                <Chip className="bg-success-500 dark:bg-success-400 text-white">NodeJS</Chip>
+                                <Chip className="bg-success-500 dark:bg-success-400 text-white">ExpressJS</Chip>
+                                <Chip className="bg-success-500 dark:bg-success-400 text-white">MongoDB</Chip>
+                                <Chip className="bg-success-500 dark:bg-success-400 text-white">MySQL</Chip>
+                                <Chip className="bg-success-500 dark:bg-success-400 text-white">PostgreSQL</Chip>
+                                <Chip className="bg-success-500 dark:bg-success-400 text-white">Redis</Chip>
+                                <Chip className="bg-success-500 dark:bg-success-400 text-white">Linux</Chip>
+                                <Chip className="bg-success-500 dark:bg-success-400 text-white">Docker</Chip>
+                                <Chip className="bg-success-500 dark:bg-success-400 text-white">Kubernetes</Chip>
+                                <Chip className="bg-success-500 dark:bg-success-400 text-white">Google Cloud Platform</Chip>
+                                <Chip className="bg-success-500 dark:bg-success-400 text-white">Google Cloud Build</Chip>
+                                <Chip className="bg-success-500 dark:bg-success-400 text-white">Prometheus</Chip>
+                                <Chip className="bg-success-500 dark:bg-success-400 text-white">Apache Kafka</Chip>
+                                <Chip className="bg-success-500 dark:bg-success-400 text-white">Firebase Cloud Messaging</Chip>
+                                <Chip className="bg-warning-500 dark:bg-warning-400 text-white">Gorilla Mux</Chip>
+                                <Chip className="bg-warning-500 dark:bg-warning-400 text-white">NestJS</Chip>
+                                <Chip className="bg-warning-500 dark:bg-warning-400 text-white">Gitlab CI/CD</Chip>
+                                <Chip className="bg-warning-500 dark:bg-warning-400 text-white">Red Hat OpenShift</Chip>
+                                <Chip className="bg-warning-500 dark:bg-warning-400 text-white">BadgerDB</Chip>
+                                <Chip className="bg-danger-500 text-white">Perl</Chip>
+                                <Chip className="bg-danger-500 text-white">Python</Chip>
+                                <Chip className="bg-danger-500 text-white">PHP</Chip>
+                                <Chip className="bg-danger-500 text-white">SQLite</Chip>
+                                <Chip className="bg-danger-500 text-white">GoLevelDB</Chip>
+                                <Chip className="bg-danger-500 text-white">Oracle</Chip>
                             </div>
                         </div>
                     </div>

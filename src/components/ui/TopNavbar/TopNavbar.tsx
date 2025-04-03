@@ -1,7 +1,8 @@
 import { Button, Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, NavbarMenuToggle, NavbarMenuItem, NavbarMenu } from "@heroui/react";
-import { HiArrowLeftEndOnRectangle, HiOutlineMoon, HiShoppingCart } from "react-icons/hi2";
+import { HiArrowLeftEndOnRectangle, HiOutlineMoon, HiOutlineSun, HiShoppingCart } from "react-icons/hi2";
 import { JSX, useState } from "react";
 import { useLocation } from 'react-router-dom'
+import useThemeSwitchStore from "../../../stores/ThemeSwitchStore";
 
 interface TopNavbarItem {
     key: string;
@@ -29,6 +30,7 @@ const listMenu = [
 ];
 
 const TopNavbar = () => {
+    const { isDark, switchTheme } = useThemeSwitchStore();
     // Using Zustand State
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const currentLocation = useLocation();
@@ -79,8 +81,13 @@ const TopNavbar = () => {
                     <Button variant="flat" aria-label="cart-btn" isIconOnly>
                         <HiShoppingCart size={20} />
                     </Button>
-                    <Button variant="flat" aria-label="switch-theme" isIconOnly>
-                        <HiOutlineMoon size={20} />
+                    <Button 
+                        variant="flat" 
+                        aria-label="switch-theme" 
+                        isIconOnly
+                        onPress={() => switchTheme(!isDark)}
+                    >
+                        {isDark ? (<HiOutlineSun size={20} />): (<HiOutlineMoon size={20} />)}
                     </Button>
                     <Button as={Link} className="bg-teal-600 text-white" href="#" variant="flat">
                         <HiArrowLeftEndOnRectangle size={20}/>Login
@@ -88,16 +95,13 @@ const TopNavbar = () => {
                 </NavbarItem>
             </NavbarContent>
             <NavbarMenu>
-                <NavbarMenuItem>
-                    <Link aria-current="page" href="/">
-                        Beranda
-                    </Link>
-                </NavbarMenuItem>
-                <NavbarMenuItem>
-                    <Link color="foreground" href="/about">
-                        Tentang Kami
-                    </Link>
-                </NavbarMenuItem>
+                {listMenu && listMenu.map((item: TopNavbarItem)=> (
+                    <NavbarMenuItem aria-label={"navitem"+item.key} isActive={ item.href === currentLocation.pathname ? true : false }>
+                        <Link aria-current="page" className={item.href === currentLocation.pathname ? "text-teal-600" : "text-foreground"} href={item.href}>
+                            {item.label}
+                        </Link>
+                    </NavbarMenuItem>
+                ))}
                 <NavbarMenuItem>
                     <Link href="#">
                         <HiArrowLeftEndOnRectangle size={20}/>Login

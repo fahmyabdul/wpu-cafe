@@ -6,3 +6,23 @@
 @tailwind components;
 @tailwind utilities;
 @tailwind variants;
+
+
+/* // for arrows
+.swiper-button-prev,
+.swiper-button-next {
+color: cyan;
+}
+
+// and for bullets
+.swiper-pagination-bullet {
+background-color: black;
+} */
+
+.swiper-button-prev:after, .swiper-rtl,.swiper-button-next:after, .swiper-rtl{
+    color: white;
+}
+
+.swiper-pagination-bullet {
+    background: white;
+}
