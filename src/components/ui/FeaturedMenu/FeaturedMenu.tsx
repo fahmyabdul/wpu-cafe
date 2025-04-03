@@ -40,7 +40,7 @@ const FeaturedMenu = () => {
                     shadow="none"
                     className="w-full"
                 >
-                    <CardBody className="p-0 bg-stone-100">
+                    <CardBody className="p-0 bg-stone-100 dark:bg-neutral-900">
                         <div
                             className="grid grid-cols-6 md:grid-cols-12 gap-6 md:gap-4 items-center justify-center"
                         >
