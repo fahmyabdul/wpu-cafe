@@ -1,14 +1,16 @@
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Spinner, useDisclosure } from "@heroui/react";
+import { Button, Chip, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Spinner, useDisclosure } from "@heroui/react";
 import { Key, ReactNode, useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import DataTable from "../../components/ui/DataTable";
-import MainLayout from "../../components/layouts/MainLayout";
 import { HiCheckBadge, HiEllipsisVertical, HiMiniFaceFrown, HiMiniPlusCircle, HiMiniTrash, HiOutlineEye } from "react-icons/hi2";
 import { useQuery } from "@tanstack/react-query";
 import ordersServices from "../../services/orders.service";
 import useAuthStore from "../../stores/AuthStore";
 import useOrderStore from "../../stores/OrderStore";
+import MainLayout from "../../components/layouts/MainLayout";
+import DataTable from "../../components/ui/DataTable";
 import { OrderView } from "./OrderView";
+import DateReformat from "../../components/ui/DateReformat";
+import { cn } from "../../utils/cn";
 
 const COLUMN_LISTS_ORDER = [
     {name: "No", uid: "no"},
@@ -16,6 +18,7 @@ const COLUMN_LISTS_ORDER = [
     {name: "Table", uid: "table_number"},
     {name: "Total", uid: "total"},
     {name: "Status", uid: "status"},
+    {name: "Ordered At", uid: "created_at"},
     {name: "Actions", uid: "actions"},
 ]
 
@@ -32,6 +35,7 @@ const Orders = () => {
         sortBy,
         sortOrder,
         totalData,
+        reloadOrder,
         search,
         changePage,
         changePageSize,
@@ -51,7 +55,7 @@ const Orders = () => {
         data: orders,
         isLoading
     } = useQuery({
-        queryKey: ["dataOrder", inputSearch, requestParams],
+        queryKey: ["dataOrder", inputSearch, requestParams, reloadOrder],
         queryFn: async () => {
             if (inputSearch !== "") {
                 requestParams = Object.assign(requestParams, {search: inputSearch});
@@ -83,11 +87,29 @@ const Orders = () => {
                 case "no":
                     return (
                         <p>{index+1}</p>
-                    )
+                    );
                 case "total":
                     return (
                         <p>${order.total as string}</p>
+                    );
+                case "status":
+                    return (
+                        <Chip
+                            className={cn("text-white",{
+                                "bg-teal-600": order.status === "COMPLETED",
+                                "bg-warning-500": order.status === "PROCESSING"
+                            })}
+                        >
+                            {order.status as string}
+                        </Chip>
                     )
+                case "created_at":
+                    return (
+                        <DateReformat 
+                            inputDate={order.created_at as string} 
+                            toFormat="MMMM do, yyyy hh:mm a"
+                        />
+                    );
                 case "actions":
                     return (
                         <Dropdown>
@@ -99,11 +121,11 @@ const Orders = () => {
                             <DropdownMenu>
                                 <DropdownItem
                                     key="detail-orders" 
-                                    // onPress={() => navigate("/orders/"+order.id)}
                                     onPress={()=>{
                                         setViewId(order.id as unknown as string);
                                         onOpen();
                                     }}
+                                    textValue="View"
                                 >
                                     <p className="flex items-center justify-start"><HiOutlineEye size={18} />&nbsp;View</p>
                                 </DropdownItem>
@@ -112,6 +134,7 @@ const Orders = () => {
                                         <DropdownItem 
                                             key="delete-orders"
                                             onPress={() => navigate("/orders/"+order.id+"/delete")}
+                                            textValue="Delete"
                                         >
                                             <p className="flex items-center justify-start text-danger"><HiMiniTrash size={18} />&nbsp;Delete</p>
                                         </DropdownItem>
@@ -121,6 +144,7 @@ const Orders = () => {
                                         <DropdownItem 
                                             key="complete-orders" 
                                             onPress={() => navigate("/orders/"+order.id+"/complete")}
+                                            textValue="Complete"
                                         >
                                             <p className="flex items-center justify-start text-teal-600 dark:text-teal-500"><HiCheckBadge size={18} />&nbsp;Complete</p>
                                         </DropdownItem>

@@ -12,9 +12,9 @@ const DateReformat = (props: PropTypes) => {
     const dateFormatted = format(date, toFormat);
 
     return (
-        <>
+        <span className="light:text-black dark:text-white">
             {dateFormatted}
-        </>
+        </span>
     )
 }
 

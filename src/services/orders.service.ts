@@ -10,14 +10,14 @@ const ordersServices = {
     getById: (id: string, requestQuery?: AxiosRequestConfig) => {
         return instance.get(`${endpoint.ORDERS}/${id}`, requestQuery);
     },
-    create: (payload: IOrderCreate) => {
-        return instance.post(`${endpoint.ORDERS}`, payload);
+    create: (payload: IOrderCreate, requestQuery?: AxiosRequestConfig) => {
+        return instance.post(`${endpoint.ORDERS}`, payload, requestQuery);
     },
-    update: (payload: IOrderUpdate) => {
-        return instance.put(`${endpoint.ORDERS}`, payload);
+    update: (id: string, payload: IOrderUpdate, requestQuery?: AxiosRequestConfig) => {
+        return instance.put(`${endpoint.ORDERS}/${id}`, payload, requestQuery);
     },
-    delete: (id: string) => {
-        return instance.delete(`${endpoint.ORDERS}/${id}`);
+    delete: (id: string, requestQuery?: AxiosRequestConfig) => {
+        return instance.delete(`${endpoint.ORDERS}/${id}`, requestQuery);
     },
 }
 

@@ -7,6 +7,7 @@ import { IOrderCart } from "../../types/Orders";
 import { HiCheckBadge, HiMiniTrash, HiOutlineEye } from "react-icons/hi2";
 import { cn } from "../../utils/cn";
 import DateReformat from "../../components/ui/DateReformat";
+import useOrderStore from "../../stores/OrderStore";
 
 interface PropTypes {
     id: string,
@@ -22,12 +23,16 @@ export const OrderView = (props: PropTypes) => {
     } = props;
 
     const { accessToken } = useAuthStore();
+    const { 
+        reloadOrder,
+        doReloadOrder,
+    } = useOrderStore();
 
     const {
         data: orderDetail,
         isLoading
     } = useQuery({
-        queryKey: [id],
+        queryKey: [id,reloadOrder],
         queryFn: async () => {
             if (!id){
                 return [];
@@ -44,13 +49,44 @@ export const OrderView = (props: PropTypes) => {
             return result;
         },
     });
+
+    const doCompleteOrder = async (id: string) => {
+        await ordersServices.update(
+            id, 
+            {
+                status: "COMPLETED"
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                }
+            }
+        )
+        .then(() => {
+            doReloadOrder();
+        });
+    };
+
+    const doDeleteOrder = async(id: string) => {
+        await ordersServices.delete(
+            id,
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                }
+            }
+        )
+        .then(() => {
+            doReloadOrder();
+        });
+    }
     
     return (
         <div className="min-w-full">
             <Modal 
                 isOpen={isOpen} 
                 onOpenChange={onOpenChange}
-                className="xl:min-w-[600px]"
+                className="xl:min-w-[800px]"
                 scrollBehavior="outside"
             >
                 <ModalContent>
@@ -65,7 +101,9 @@ export const OrderView = (props: PropTypes) => {
                             (onClose) => (
                                 <>
                                     <ModalHeader className="flex flex-col gap-1">
-                                        <p className="flex items-center justify-start"><HiOutlineEye size={18} className="mr-2"/>Order Detail</p>
+                                        <p className="flex items-center justify-start text-lg xl:text-xl">
+                                            <HiOutlineEye className="mr-2"/>Order Detail
+                                        </p>
                                     </ModalHeader>
                                         <ModalBody className="flex flex-col text-md">
                                             <div className="flex flex-col gap-3">
@@ -106,22 +144,28 @@ export const OrderView = (props: PropTypes) => {
                                             <hr className="mt-3"/>
                                             <div>
                                                 <h1 className="font-bold text-lg mb-4">Ordered Items</h1>
-                                                <div className="grid grid-cols-2 lg:grid-cols-3 grid-flow-row gap-4">
+                                                <div className="grid grid-cols-2 lg:grid-cols-4 grid-flow-row gap-4">
                                                     {orderDetail.cart.map((item: IOrderCart, index:number) => (
-                                                        <Card key={index} isPressable shadow="sm" onPress={() => console.log("item pressed")}>
+                                                        <Card 
+                                                            key={index} 
+                                                            isPressable 
+                                                            shadow="sm" 
+                                                            className="dark:bg-gray-800"
+                                                        >
                                                             <CardBody className="overflow-visible p-0">
                                                                 <Image
-                                                                alt={item.menuItem?.name}
-                                                                className="w-full object-cover h-[140px] rounded-b-none"
-                                                                radius="lg"
-                                                                shadow="sm"
-                                                                src={item.menuItem?.image_url}
-                                                                width="100%"
+                                                                    alt={item.menuItem?.name}
+                                                                    className="w-full object-cover h-[140px] rounded-b-none"
+                                                                    radius="lg"
+                                                                    shadow="sm"
+                                                                    src={item.menuItem?.image_url}
+                                                                    width="100%"
                                                                 />
                                                             </CardBody>
-                                                            <CardFooter className="text-sm justify-between">
+                                                            <CardFooter className="flex flex-col text-sm justify-between">
                                                                 <b>{item.menuItem?.name}</b>
-                                                                <p className="text-default-500">{item.quantity} pcs</p>
+                                                                <p className="text-default-500">{item.quantity} x ${item.menuItem?.price}</p>
+                                                                <p className="text-default-600 font-medium">${item.quantity * (item.menuItem?.price === undefined ? 0 : item.menuItem?.price as unknown as number)}</p>
                                                             </CardFooter>
                                                         </Card>
                                                     ))}
@@ -133,7 +177,10 @@ export const OrderView = (props: PropTypes) => {
                                         (
                                             <Button 
                                                 color="primary" 
-                                                onPress={onClose}
+                                                onPress={() => {
+                                                    doDeleteOrder(orderDetail.id);
+                                                    onClose();
+                                                }}
                                                 className="bg-danger gap-2"
                                                 size="lg"
                                                 fullWidth
@@ -145,7 +192,10 @@ export const OrderView = (props: PropTypes) => {
                                         (
                                             <Button 
                                                 color="primary" 
-                                                onPress={onClose}
+                                                onPress={() => {
+                                                    doCompleteOrder(orderDetail.id);
+                                                    onClose();
+                                                }}
                                                 className="bg-teal-600 gap-2"
                                                 size="lg"
                                                 fullWidth

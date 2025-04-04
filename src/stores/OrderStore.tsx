@@ -9,10 +9,12 @@ interface IOrderStore {
     sortBy: string;
     sortOrder: string;
     totalData: number;
+    reloadOrder: boolean;
     search: (input: string) => void;
     changePage: (input?: number) => void;
     changePageSize: (input?: string) => void;
     changeTotalData: (input?: number) => void;
+    doReloadOrder: () => void;
     deleteOrderStore: () => void;
 }
 
@@ -22,9 +24,10 @@ const useOrderStore = create<IOrderStore>()(
             inputSearch: "",
             page: 1,
             pageSize: LIMIT_LISTS[1].label,
-            sortBy: "name",
-            sortOrder: "asc",
+            sortBy: "created_at",
+            sortOrder: "desc",
             totalData: 0,
+            reloadOrder: false,
             search: (input: string) => set(
                 () => (
                     { 
@@ -45,6 +48,11 @@ const useOrderStore = create<IOrderStore>()(
             changeTotalData: (input?: number) => set(
                 (state) => ( {
                     totalData: input ? input : state.totalData,
+                })
+            ),
+            doReloadOrder: () => set(
+                (state) => ( {
+                    reloadOrder: !state.reloadOrder,
                 })
             ),
             deleteOrderStore: () => {
