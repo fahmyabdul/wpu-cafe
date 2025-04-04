@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { LIMIT_LISTS } from "../components/constants/constants";
+import { LIMIT_LISTS } from "../constants/constants";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 interface IOrderStore {

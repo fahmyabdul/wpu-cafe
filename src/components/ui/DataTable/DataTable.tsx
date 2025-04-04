@@ -2,7 +2,7 @@ import { Button, Input, Pagination, Select, SelectItem, Table, TableBody, TableC
 import { ChangeEvent, Key, ReactNode, useMemo } from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { cn } from "../../../utils/cn";
-import { LIMIT_LISTS } from "../../constants/constants";
+import { LIMIT_LISTS } from "../../../constants/constants";
 import CustomSpinner from "../CustomSpinner";
 
 interface PropTypes {
