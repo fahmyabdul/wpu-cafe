@@ -140,11 +140,11 @@ const Orders = () => {
                         changePageSize(e.target.value as unknown as string);
                     }}
                     isLoading={isLoading}
-                    currentPage={1}
+                    currentPage={isLoading ? 1 : page}
                     onChangePage={(e) => { 
                         changePage(e as unknown as number)
                     }}
-                    totalPages={
+                    totalPages={ isLoading ? 1 :
                         Math.ceil(totalData/(pageSize as unknown as number))
                     }
                 />
