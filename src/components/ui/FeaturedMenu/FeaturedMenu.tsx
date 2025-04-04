@@ -75,7 +75,6 @@ const FeaturedMenu = () => {
                 </Card>
             ): ""}
             <Swiper
-                // install Swiper modules
                 modules={[Navigation, Pagination, A11y]}
                 spaceBetween={50}
                 slidesPerView={1}
@@ -94,7 +93,7 @@ const FeaturedMenu = () => {
                             isPressable
                             shadow="none"
                             onPress={()=> console.log(`Pressed ${item.name}`)}
-                            className="w-full"
+                            className="w-full min-h-[465px] lg:min-h-full"
                         >
                             <CardBody
                                 // className="p-0 bg-gradient-to-r from-sky-600 to-teal-400"
@@ -119,9 +118,9 @@ const FeaturedMenu = () => {
                                             width="100%"
                                         />
                                     </div>
-                                    <div className="flex flex-col col-span-6 md:col-span-8 gap-3 ml-5 mb-10 lg:mb-0 text-white">
+                                    <div className="flex flex-col col-span-6 md:col-span-8 gap-3 ml-5 mb-10 mt-2 lg:mb-0 text-white">
                                         <h1 className="text-3xl font-bold">{item.name}</h1>
-                                        <p className=" text-lg lg:text-2xl">
+                                        <p className=" text-xl lg:text-2xl">
                                             Only&nbsp;
                                             <span className=" font-bold">${item.price}</span>
                                         </p>

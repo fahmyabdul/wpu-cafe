@@ -1,7 +1,9 @@
 import { RouteObject } from "react-router-dom";
+import ProtectedRoute from "./ProtectedRoute";
 import Home from "../pages/Home";
 import About from "../pages/About";
 import Login from "../pages/Auth/Login";
+import Orders from "../pages/Orders";
 // import Menu from "../pages/Menu";
 
 const routes: RouteObject[] = [
@@ -15,7 +17,19 @@ const routes: RouteObject[] = [
     },
     {
         path: "/login",
-        element: <Login/>, // apa yang mau dirender
+        element: (
+            <ProtectedRoute>
+                <Login/>
+            </ProtectedRoute>
+        ),
+    },
+    {
+        path: "/orders",
+        element: (
+            <ProtectedRoute>
+                <Orders/>
+            </ProtectedRoute>
+        ),
     },
     // {
     //     path: "/menu/:id", // dynamic routes

@@ -11,16 +11,19 @@
   },
   "dependencies": {
     "@heroui/react": "^2.7.5",
+    "@hookform/resolvers": "^5.0.1",
     "@tanstack/react-query": "^5.71.1",
     "axios": "^1.8.4",
     "clsx": "^2.1.1",
     "framer-motion": "^12.6.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-hook-form": "^7.55.0",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.4.1",
     "swiper": "^11.2.6",
     "tailwind-merge": "^3.1.0",
+    "yup": "^1.6.1",
     "zustand": "^5.0.3"
   },
   "devDependencies": {

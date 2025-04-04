@@ -1,8 +1,9 @@
-import { Button, Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, NavbarMenuToggle, NavbarMenuItem, NavbarMenu } from "@heroui/react";
+import { Button, Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, Badge, Tooltip } from "@heroui/react";
 import { HiArrowLeftEndOnRectangle, HiOutlineMoon, HiOutlineSun, HiShoppingCart } from "react-icons/hi2";
 import { JSX, useState } from "react";
 import { useLocation } from 'react-router-dom'
 import useThemeSwitchStore from "../../../stores/ThemeSwitchStore";
+import useAuthStore from "../../../stores/AuthStore";
 
 interface TopNavbarItem {
     key: string;
@@ -18,9 +19,9 @@ const listMenu = [
         href: "/",
     },
     {
-        key: "menus",
-        label: "Menus",
-        href: "/menus",
+        key: "orders",
+        label: "Orders",
+        href: "/orders",
     },
     {
         key: "about",
@@ -30,10 +31,15 @@ const listMenu = [
 ];
 
 const TopNavbar = () => {
-    const { isDark, switchTheme } = useThemeSwitchStore();
-    // Using Zustand State
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const currentLocation = useLocation();
+
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { isDark, switchTheme } = useThemeSwitchStore();
+    const { accessToken, deleteAccessToken } = useAuthStore();
+    const logout = () => {
+        deleteAccessToken();
+        window.location.href = "/login";
+    }
 
     return (
         <Navbar 
@@ -69,7 +75,7 @@ const TopNavbar = () => {
                 justify="center"
             >
                 {listMenu && listMenu.map((item: TopNavbarItem)=> (
-                    <NavbarItem aria-label={"navitem"+item.key} isActive={ item.href === currentLocation.pathname ? true : false }>
+                    <NavbarItem key={"navitem"+item.key} aria-label={"navitem"+item.key} isActive={ item.href === currentLocation.pathname ? true : false }>
                         <Link aria-current="page" className={item.href === currentLocation.pathname ? "text-teal-600" : "text-foreground"} href={item.href}>
                             {item.label}
                         </Link>
@@ -78,9 +84,11 @@ const TopNavbar = () => {
             </NavbarContent>
             <NavbarContent justify="end">
                 <NavbarItem className="flex items-center gap-2">
-                    <Button variant="flat" aria-label="cart-btn" isIconOnly>
-                        <HiShoppingCart size={20} />
-                    </Button>
+                    <Badge color="primary" content="0" size="md" shape="circle" variant="solid">
+                        <Button as={Link} href="/orders" variant="flat" aria-label="cart-btn" isIconOnly>
+                            <HiShoppingCart size={20} />
+                        </Button>
+                    </Badge>
                     <Button 
                         variant="flat" 
                         aria-label="switch-theme" 
@@ -89,9 +97,55 @@ const TopNavbar = () => {
                     >
                         {isDark ? (<HiOutlineSun size={20} />): (<HiOutlineMoon size={20} />)}
                     </Button>
-                    <Button as={Link} className="bg-teal-600 text-white hidden sm:flex" href="/login" variant="flat">
-                        <HiArrowLeftEndOnRectangle size={20}/>Login
-                    </Button>
+                    {accessToken ? 
+                        (
+                            <Tooltip 
+                                content="Logout" 
+                                showArrow={true}
+                                closeDelay={1}
+                                size="sm"
+                                classNames={{
+                                    base: [
+                                        // arrow color
+                                        "before:bg-teal-600",
+                                    ],
+                                    content: ["py-2 px-4 shadow-xl", "text-white bg-teal-600"],
+                                }}
+                            >
+                                <Button 
+                                    type="button"
+                                    className="bg-teal-600 text-white hidden sm:flex" 
+                                    onPress={
+                                        ()=> {
+                                            logout();
+                                        }
+                                    } 
+                                    variant="flat"
+                                >
+                                    Logout
+                                </Button>
+                            </Tooltip>
+                        ) : 
+                        (
+                            <Tooltip 
+                                content="Login" 
+                                showArrow={true}
+                                closeDelay={1}
+                                size="sm"
+                                classNames={{
+                                    base: [
+                                        // arrow color
+                                        "before:bg-teal-600",
+                                    ],
+                                    content: ["py-2 px-4 shadow-xl", "text-white bg-teal-600"],
+                                }}
+                            >
+                                <Button as={Link} className="bg-teal-600 text-white hidden sm:flex" href="/login" variant="flat" isIconOnly>
+                                    <HiArrowLeftEndOnRectangle size={20}/>
+                                </Button>
+                            </Tooltip>
+                        )
+                    }
                 </NavbarItem>
             </NavbarContent>
             <NavbarMenu>
@@ -103,9 +157,27 @@ const TopNavbar = () => {
                     </NavbarMenuItem>
                 ))}
                 <NavbarMenuItem>
-                    <Link href="/login">
-                        <HiArrowLeftEndOnRectangle size={20}/>Login
-                    </Link>
+                    {accessToken ? 
+                        (
+                            <Button 
+                                type="button"
+                                className="bg-teal-600 text-white" 
+                                onPress={
+                                    ()=> {
+                                        logout();
+                                    }
+                                }
+                                variant="flat"
+                            >
+                                <HiArrowLeftEndOnRectangle size={20}/> Logout
+                            </Button>
+                        ) : 
+                        (
+                            <Button as={Link} className="bg-teal-600 text-white" href="/login" variant="flat">
+                                <HiArrowLeftEndOnRectangle size={20}/> Login
+                            </Button>
+                        )
+                    }
                 </NavbarMenuItem>
             </NavbarMenu>
         </Navbar>

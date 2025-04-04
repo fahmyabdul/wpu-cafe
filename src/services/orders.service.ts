@@ -1,10 +1,11 @@
+import { AxiosRequestConfig } from "axios";
 import { IOrderCreate, IOrderUpdate } from "../types/Orders";
 import endpoint from "./endpoint.constant";
 import instance from "./instance";
 
 const ordersServices = {
-    getAll: () => {
-        return instance.get(`${endpoint.ORDERS}`);
+    getAll: (requestQuery?: AxiosRequestConfig) => {
+        return instance.get(`${endpoint.ORDERS}`, requestQuery);
     },
     getById: (id: string) => {
         return instance.get(`${endpoint.ORDERS}/${id}`);

@@ -12,7 +12,9 @@ const useAuthStore = create<IAuth>()(
         (set) => ({
             accessToken: "",
             setAccessToken: (accessToken: string) => set(() => ({ accessToken: accessToken })),
-            deleteAccessToken: () => set(()=> ({ accessToken: "" })),
+            deleteAccessToken: () => {
+                useAuthStore.persist.clearStorage()
+            }
         }),
         {
             name: "accessToken",
