@@ -106,6 +106,26 @@ export const OrderView = (props: PropTypes) => {
                                         </p>
                                     </ModalHeader>
                                         <ModalBody className="flex flex-col text-md">
+                                                <div className="relative hidden xl:flex">
+                                                    {orderDetail.status === "COMPLETED" &&
+                                                        (
+                                                            <div 
+                                                                className="absolute top-10 right-10 -rotate-6 rounded-xl border-teal-600 border-[8px] text-center p-2"
+                                                                style={
+                                                                    {
+                                                                        "maskImage": "url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/8399/grunge.png')",
+                                                                        "maskSize": "900px 1004px"
+                                                                    }
+                                                                }
+                                                            >
+                                                                <HiCheckBadge 
+                                                                    className="text-teal-600 text-9xl mb-[-10px]"
+                                                                />
+                                                                <span className="text-teal-600 text-2xl font-bold">Completed</span>
+                                                            </div>
+                                                        )
+                                                    }
+                                                </div>
                                             <div className="flex flex-col gap-3">
                                                 <div>
                                                     <h1 className="text-default-500">Order ID</h1>
@@ -120,6 +140,16 @@ export const OrderView = (props: PropTypes) => {
                                                     <p className="font-bold">{orderDetail.table_number}</p>
                                                 </div>
                                                 <div>
+                                                    <h1 className="text-default-500">Total</h1>
+                                                    <p className="font-bold">${orderDetail.total}</p>
+                                                </div>
+                                                <div>
+                                                    <h1 className="text-default-500">Ordered On</h1>
+                                                    <p className="font-bold">
+                                                        <DateReformat inputDate={orderDetail.created_at} toFormat="MMMM do, yyyy hh:mm a"/>
+                                                    </p>
+                                                </div>
+                                                <div>
                                                     <h1 className="text-default-500">Status</h1>
                                                     <Chip
                                                         className={cn("text-white",{
@@ -129,16 +159,6 @@ export const OrderView = (props: PropTypes) => {
                                                     >
                                                         {orderDetail.status}
                                                     </Chip>
-                                                </div>
-                                                <div>
-                                                    <h1 className="text-default-500">Total</h1>
-                                                    <p className="font-bold">${orderDetail.total}</p>
-                                                </div>
-                                                <div>
-                                                    <h1 className="text-default-500">Ordered On</h1>
-                                                    <p className="font-bold">
-                                                        <DateReformat inputDate={orderDetail.created_at} toFormat="MMMM do, yyyy hh:mm a"/>
-                                                    </p>
                                                 </div>
                                             </div>
                                             <hr className="mt-3"/>
@@ -185,7 +205,7 @@ export const OrderView = (props: PropTypes) => {
                                                 size="lg"
                                                 fullWidth
                                             >
-                                                <HiMiniTrash size={22} />Delete
+                                                <HiMiniTrash size={22} />Delete This Order
                                             </Button>
                                         )
                                         :
@@ -200,7 +220,7 @@ export const OrderView = (props: PropTypes) => {
                                                 size="lg"
                                                 fullWidth
                                             >
-                                                <HiCheckBadge size={22} />Make Complete
+                                                <HiCheckBadge size={22} />Complete This Order
                                             </Button>
                                         )}
                                     </ModalFooter>

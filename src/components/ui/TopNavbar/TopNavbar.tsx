@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom'
 import useThemeSwitchStore from "../../../stores/ThemeSwitchStore";
 import useAuthStore from "../../../stores/AuthStore";
 import useOrderStore from "../../../stores/OrderStore";
+import { cn } from "../../../utils/cn";
 
 interface TopNavbarItem {
     key: string;
@@ -86,15 +87,25 @@ const TopNavbar = () => {
             <NavbarContent justify="end">
                 <NavbarItem className="flex items-center gap-2">
                     <Badge color="primary" content={totalData} isInvisible={accessToken ? false: true} size="md" shape="circle" variant="solid">
-                        <Button 
-                            as={Link} href="/orders" 
-                            variant="flat" 
-                            aria-label="cart-btn" 
-                            isIconOnly
-                            className={currentLocation.pathname === "/orders" ? "bg-teal-600 text-white" : "text-foreground"}
+                        <Tooltip 
+                            content="You need to Login to order" 
+                            showArrow={accessToken ? false : true}
+                            className={cn("p-2",{
+                                "hidden after:hidden": accessToken,
+                            })}
+                            closeDelay={1}
+                            size="sm"
                         >
-                            <HiShoppingBag size={20} />
-                        </Button>
+                            <Button 
+                                as={Link} href="/orders" 
+                                variant="flat" 
+                                aria-label="cart-btn" 
+                                isIconOnly
+                                className={currentLocation.pathname === "/orders" ? "bg-teal-600 text-white" : "text-foreground"}
+                            >
+                                <HiShoppingBag size={20} />
+                            </Button>
+                        </Tooltip>
                     </Badge>
                     <Button 
                         variant="flat" 
