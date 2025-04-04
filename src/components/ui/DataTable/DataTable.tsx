@@ -1,8 +1,9 @@
-import { Button, Input, Pagination, Select, SelectItem, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react";
+import { Button, Input, Pagination, Select, SelectItem, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react";
 import { ChangeEvent, Key, ReactNode, useMemo } from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { cn } from "../../../utils/cn";
 import { LIMIT_LISTS } from "../../constants/constants";
+import CustomSpinner from "../CustomSpinner";
 
 interface PropTypes {
     columns: Record<string, unknown>[];
@@ -127,7 +128,7 @@ const DataTable = (props: PropTypes) => {
                 columns={columns}
             >
                 {(column) => (
-                    <TableColumn key={column.uid as Key}>
+                    <TableColumn key={column.uid as Key} className="text-small">
                         {column.name as string}
                     </TableColumn>
                 )}
@@ -139,7 +140,7 @@ const DataTable = (props: PropTypes) => {
                 isLoading={isLoading}
                 loadingContent={
                     <div className="flex h-full w-full items-center justify-center bg-foreground-700/30 backdrop-blur-sm">
-                        <Spinner color="success"/>
+                        <CustomSpinner width={150}/>
                     </div>
                 }
             >

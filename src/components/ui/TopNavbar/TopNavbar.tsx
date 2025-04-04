@@ -1,5 +1,5 @@
 import { Button, Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, Badge, Tooltip } from "@heroui/react";
-import { HiArrowLeftEndOnRectangle, HiOutlineMoon, HiOutlineSun, HiShoppingCart } from "react-icons/hi2";
+import { HiArrowLeftStartOnRectangle, HiArrowRightEndOnRectangle, HiOutlineMoon, HiOutlineSun, HiShoppingBag } from "react-icons/hi2";
 import { JSX, useState } from "react";
 import { useLocation } from 'react-router-dom'
 import useThemeSwitchStore from "../../../stores/ThemeSwitchStore";
@@ -39,7 +39,7 @@ const TopNavbar = () => {
     const logout = () => {
         deleteAccessToken();
         deleteOrderStore();
-        window.location.href = "/login";
+        window.location.href = "/";
     }
 
     return (
@@ -85,7 +85,7 @@ const TopNavbar = () => {
             </NavbarContent>
             <NavbarContent justify="end">
                 <NavbarItem className="flex items-center gap-2">
-                    <Badge color="primary" content={totalData} size="md" shape="circle" variant="solid">
+                    <Badge color="primary" content={totalData} isInvisible={accessToken ? false: true} size="md" shape="circle" variant="solid">
                         <Button 
                             as={Link} href="/orders" 
                             variant="flat" 
@@ -93,7 +93,7 @@ const TopNavbar = () => {
                             isIconOnly
                             className={currentLocation.pathname === "/orders" ? "bg-teal-600 text-white" : "text-foreground"}
                         >
-                            <HiShoppingCart size={20} />
+                            <HiShoppingBag size={20} />
                         </Button>
                     </Badge>
                     <Button 
@@ -114,9 +114,9 @@ const TopNavbar = () => {
                                 classNames={{
                                     base: [
                                         // arrow color
-                                        "before:bg-teal-600",
+                                        "before:bg-danger",
                                     ],
-                                    content: ["py-2 px-4 shadow-xl", "text-white bg-teal-600"],
+                                    content: ["py-2 px-4 shadow-xl", "text-white bg-danger"],
                                 }}
                             >
                                 <Button 
@@ -128,8 +128,9 @@ const TopNavbar = () => {
                                         }
                                     } 
                                     variant="flat"
+                                    isIconOnly
                                 >
-                                    Logout
+                                    <HiArrowLeftStartOnRectangle size={20}/>
                                 </Button>
                             </Tooltip>
                         ) : 
@@ -148,7 +149,7 @@ const TopNavbar = () => {
                                 }}
                             >
                                 <Button as={Link} className="bg-teal-600 text-white hidden sm:flex" href="/login" variant="flat" isIconOnly>
-                                    <HiArrowLeftEndOnRectangle size={20}/>
+                                    <HiArrowRightEndOnRectangle size={20}/>
                                 </Button>
                             </Tooltip>
                         )
@@ -176,12 +177,12 @@ const TopNavbar = () => {
                                 }
                                 variant="flat"
                             >
-                                <HiArrowLeftEndOnRectangle size={20}/> Logout
+                                <HiArrowLeftStartOnRectangle size={20}/> Logout
                             </Button>
                         ) : 
                         (
                             <Button as={Link} className="bg-teal-600 text-white" href="/login" variant="flat">
-                                <HiArrowLeftEndOnRectangle size={20}/> Login
+                                <HiArrowRightEndOnRectangle size={20}/> Login
                             </Button>
                         )
                     }

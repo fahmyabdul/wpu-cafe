@@ -31,10 +31,6 @@ const routes: RouteObject[] = [
             </ProtectedRoute>
         ),
     },
-    // {
-    //     path: "/menu/:id", // dynamic routes
-    //     element: <Menu/>,
-    // },
 ];
 
 export default routes;

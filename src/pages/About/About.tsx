@@ -6,7 +6,7 @@ import { FaGithub, FaInstagram, FaLinkedin, FaRegEnvelope, FaTelegram } from "re
 
 const About = () => {
     return (
-        <MainLayout title="Tentang Kami">
+        <MainLayout title="About Us">
             <div className="flex flex-col gap-5 lg:gap-10 justify-center items-center w-full xl:w-8/12">
                 <h1 className="font-bold bg-gradient-to-r bg-clip-text from-sky-600 to-teal-400 text-transparent mb-0 text-4xl mt-4 lg:mt-0">About Us</h1>
                 <span className="mt-[-15px] lg:mt-[-35px] text-default-500 text-lg">What You Need To Know About Us</span>

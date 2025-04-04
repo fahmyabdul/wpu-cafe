@@ -7,8 +7,8 @@ const ordersServices = {
     getAll: (requestQuery?: AxiosRequestConfig) => {
         return instance.get(`${endpoint.ORDERS}`, requestQuery);
     },
-    getById: (id: string) => {
-        return instance.get(`${endpoint.ORDERS}/${id}`);
+    getById: (id: string, requestQuery?: AxiosRequestConfig) => {
+        return instance.get(`${endpoint.ORDERS}/${id}`, requestQuery);
     },
     create: (payload: IOrderCreate) => {
         return instance.post(`${endpoint.ORDERS}`, payload);

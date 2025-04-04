@@ -15,7 +15,9 @@ const MainLayout = (props: PropTypes) => {
     } = props;
 
     useEffect(() => {
-        document.title = `WPU Cafe | ${title}`;
+        if (title){
+            document.title = `WPU Cafe | ${title}`;
+        }
     }, [title]);
 
     return (

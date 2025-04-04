@@ -1,13 +1,14 @@
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Spinner } from "@heroui/react";
-import { Key, ReactNode, useCallback } from "react";
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Spinner, useDisclosure } from "@heroui/react";
+import { Key, ReactNode, useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DataTable from "../../components/ui/DataTable";
 import MainLayout from "../../components/layouts/MainLayout";
-import { HiEllipsisVertical, HiMiniFaceFrown, HiMiniPlusCircle } from "react-icons/hi2";
+import { HiCheckBadge, HiEllipsisVertical, HiMiniFaceFrown, HiMiniPlusCircle, HiMiniTrash, HiOutlineEye } from "react-icons/hi2";
 import { useQuery } from "@tanstack/react-query";
 import ordersServices from "../../services/orders.service";
 import useAuthStore from "../../stores/AuthStore";
 import useOrderStore from "../../stores/OrderStore";
+import { OrderView } from "./OrderView";
 
 const COLUMN_LISTS_ORDER = [
     {name: "No", uid: "no"},
@@ -20,6 +21,8 @@ const COLUMN_LISTS_ORDER = [
 
 const Orders = () => {
     const navigate = useNavigate();
+    const {isOpen, onOpen, onOpenChange} = useDisclosure();
+    const [viewId, setViewId] = useState("");
 
     // Using Zustand State
     const { 
@@ -78,8 +81,12 @@ const Orders = () => {
 
             switch (columnKey) {
                 case "no":
-                    return(
+                    return (
                         <p>{index+1}</p>
+                    )
+                case "total":
+                    return (
+                        <p>${order.total as string}</p>
                     )
                 case "actions":
                     return (
@@ -92,16 +99,33 @@ const Orders = () => {
                             <DropdownMenu>
                                 <DropdownItem
                                     key="detail-orders" 
-                                    onPress={() => navigate(`/orders/${order.id}`)}
+                                    // onPress={() => navigate("/orders/"+order.id)}
+                                    onPress={()=>{
+                                        setViewId(order.id as unknown as string);
+                                        onOpen();
+                                    }}
                                 >
-                                    View
+                                    <p className="flex items-center justify-start"><HiOutlineEye size={18} />&nbsp;View</p>
                                 </DropdownItem>
-                                <DropdownItem 
-                                    key="delete-orders" 
-                                    className="text-teal-600"
-                                >
-                                    Delete
-                                </DropdownItem>
+                                {order.status === "COMPLETED" ? 
+                                    (
+                                        <DropdownItem 
+                                            key="delete-orders"
+                                            onPress={() => navigate("/orders/"+order.id+"/delete")}
+                                        >
+                                            <p className="flex items-center justify-start text-danger"><HiMiniTrash size={18} />&nbsp;Delete</p>
+                                        </DropdownItem>
+                                    )
+                                    :
+                                    (
+                                        <DropdownItem 
+                                            key="complete-orders" 
+                                            onPress={() => navigate("/orders/"+order.id+"/complete")}
+                                        >
+                                            <p className="flex items-center justify-start text-teal-600 dark:text-teal-500"><HiCheckBadge size={18} />&nbsp;Complete</p>
+                                        </DropdownItem>
+                                    )
+                                }
                             </DropdownMenu>
                         </Dropdown>
                     );
@@ -114,6 +138,7 @@ const Orders = () => {
 
     return (
         <MainLayout title="Orders">
+            <OrderView id={viewId} isOpen={isOpen} onOpenChange={onOpenChange}/>
             <div className="flex flex-col gap-5 lg:gap-10 justify-center items-center w-full xl:w-8/12 px-5 xl:px-0">
                 <h1
                         className="font-bold text-2xl bg-gradient-to-r bg-clip-text from-sky-600 to-teal-400 text-transparent text-left w-full"
@@ -130,7 +155,7 @@ const Orders = () => {
                         ) 
                         :
                         (
-                            <Spinner color="success" />
+                            <Spinner color="success" variant="wave" />
                         )
                     }
                     buttonTopContentLabel={
