@@ -110,6 +110,8 @@ const DataTable = (props: PropTypes) => {
 
     return (
         <Table 
+            isStriped
+            selectionMode="single"
             aria-label="datatable-table"
             topContent={TopContent}
             topContentPlacement="outside"
@@ -143,11 +145,17 @@ const DataTable = (props: PropTypes) => {
             >
                 {
                     (item)=> (
-                        <TableRow aria-label={"datatable-row-"+item._id} key={item._id as Key}>
+                        <TableRow 
+                            aria-label={"datatable-row-"+item._id} 
+                            key={item._id as Key}
+                            className="hover:bg-teal-500 dark:hover:bg-teal-600 first:rounded-l-lg last:rounded-r-lg"
+                        >
                             {
                                 (columnKey) => {
                                     return (
-                                        <TableCell>
+                                        <TableCell
+                                            className="first:rounded-l-lg last:rounded-r-lg"
+                                        >
                                             {
                                                 renderCell(data.indexOf(item), item, columnKey)
                                             }

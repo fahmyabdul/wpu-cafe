@@ -7,7 +7,7 @@ import { HiEllipsisVertical, HiMiniFaceFrown, HiMiniPlusCircle } from "react-ico
 import { useQuery } from "@tanstack/react-query";
 import ordersServices from "../../services/orders.service";
 import useAuthStore from "../../stores/AuthStore";
-import useOrderSearchStore from "../../stores/OrderSearchStore";
+import useOrderStore from "../../stores/OrderStore";
 
 const COLUMN_LISTS_ORDER = [
     {name: "No", uid: "no"},
@@ -33,7 +33,7 @@ const Orders = () => {
         changePage,
         changePageSize,
         changeTotalData,
-    } = useOrderSearchStore();
+    } = useOrderStore();
 
     const { accessToken } = useAuthStore();
     
@@ -124,7 +124,14 @@ const Orders = () => {
                     columns={COLUMN_LISTS_ORDER}
                     data={!isLoading ? orders : []}
                     emptyContent={
-                        !isLoading ? <p className="flex items-center justify-center"><b>OH NO!!!</b>&nbsp;Nobody Order Our Product&nbsp;<HiMiniFaceFrown size={25} /></p> : <Spinner color="success" />
+                        !isLoading ? 
+                        (
+                            <p className="flex items-center justify-center"><b>OH NO!!!</b>&nbsp;Nobody Order Our Product&nbsp;<HiMiniFaceFrown size={25} /></p>
+                        ) 
+                        :
+                        (
+                            <Spinner color="success" />
+                        )
                     }
                     buttonTopContentLabel={
                         <>

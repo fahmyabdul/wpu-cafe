@@ -4,6 +4,7 @@ import { JSX, useState } from "react";
 import { useLocation } from 'react-router-dom'
 import useThemeSwitchStore from "../../../stores/ThemeSwitchStore";
 import useAuthStore from "../../../stores/AuthStore";
+import useOrderStore from "../../../stores/OrderStore";
 
 interface TopNavbarItem {
     key: string;
@@ -19,11 +20,6 @@ const listMenu = [
         href: "/",
     },
     {
-        key: "orders",
-        label: "Orders",
-        href: "/orders",
-    },
-    {
         key: "about",
         label: "About Us",
         href: "/about",
@@ -35,9 +31,14 @@ const TopNavbar = () => {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { isDark, switchTheme } = useThemeSwitchStore();
+    const { 
+        totalData,
+        deleteOrderStore,
+    } = useOrderStore();
     const { accessToken, deleteAccessToken } = useAuthStore();
     const logout = () => {
         deleteAccessToken();
+        deleteOrderStore();
         window.location.href = "/login";
     }
 
@@ -84,8 +85,14 @@ const TopNavbar = () => {
             </NavbarContent>
             <NavbarContent justify="end">
                 <NavbarItem className="flex items-center gap-2">
-                    <Badge color="primary" content="0" size="md" shape="circle" variant="solid">
-                        <Button as={Link} href="/orders" variant="flat" aria-label="cart-btn" isIconOnly>
+                    <Badge color="primary" content={totalData} size="md" shape="circle" variant="solid">
+                        <Button 
+                            as={Link} href="/orders" 
+                            variant="flat" 
+                            aria-label="cart-btn" 
+                            isIconOnly
+                            className={currentLocation.pathname === "/orders" ? "bg-teal-600 text-white" : "text-foreground"}
+                        >
                             <HiShoppingCart size={20} />
                         </Button>
                     </Badge>
@@ -114,7 +121,7 @@ const TopNavbar = () => {
                             >
                                 <Button 
                                     type="button"
-                                    className="bg-teal-600 text-white hidden sm:flex" 
+                                    className="bg-danger text-white hidden sm:flex" 
                                     onPress={
                                         ()=> {
                                             logout();
@@ -161,7 +168,7 @@ const TopNavbar = () => {
                         (
                             <Button 
                                 type="button"
-                                className="bg-teal-600 text-white" 
+                                className="bg-danger text-white" 
                                 onPress={
                                     ()=> {
                                         logout();
