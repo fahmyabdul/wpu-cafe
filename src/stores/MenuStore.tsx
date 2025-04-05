@@ -7,11 +7,13 @@ interface IMenuStore {
     pageSize: string;
     sortBy: string;
     sortOrder: string;
+    category: string;
     totalData: number;
     reload: boolean;
     search: (input: string) => void;
     changePage: (input?: number) => void;
     changePageSize: (input?: string) => void;
+    changeCategory: (input?: string) => void;
     changeTotalData: (input?: number) => void;
     doReload: () => void;
 }
@@ -23,6 +25,7 @@ const useMenuStore = create<IMenuStore>((set) => (
         pageSize: LIMIT_LISTS[0].label,
         sortBy: "name",
         sortOrder: "asc",
+        category: "",
         totalData: 0,
         reload: false,
         search: (input: string) => set(
@@ -42,9 +45,16 @@ const useMenuStore = create<IMenuStore>((set) => (
                 pageSize: input ? input : state.pageSize,
             })
         ),
+        changeCategory: (input?: string) => set(
+            () => (
+                {
+                    category: input,
+                }
+            )
+        ),
         changeTotalData: (input?: number) => set(
-            (state) => ( {
-                totalData: input ? input : state.totalData,
+            () => ( {
+                totalData: input,
             })
         ),
         doReload: () => set(

@@ -22,4 +22,13 @@ interface IMenuById {
     Reviews: IMenuReviews;
 }
 
-export type { IMenu, IMenuById };
+interface IMenuFilter {
+    page?: number;
+    pageSize?: string;
+    sortBy?: string;
+    sortOrder?: string;
+    search?: string;
+    category?: string;
+}
+
+export type { IMenu, IMenuById, IMenuFilter };

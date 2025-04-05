@@ -7,6 +7,7 @@ import { LIMIT_LISTS, MENU_CATEGORIES } from "../../../constants/constants";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import useOrderStore from "../../../stores/OrderStore";
 import { cn } from "../../../utils/cn";
+import { HiMiniFaceFrown } from "react-icons/hi2";
 
 interface PropTypes {
     isOrderable: boolean;
@@ -34,9 +35,11 @@ const MenuCardList = (props: PropTypes) => {
         sortBy,
         sortOrder,
         reload,
+        category,
         search,
         changePage,
         changePageSize,
+        changeCategory,
         changeTotalData,
     } = useMenuStore();
     
@@ -44,14 +47,15 @@ const MenuCardList = (props: PropTypes) => {
         page: page,
         pageSize: pageSize,
         sortBy: sortBy,
-        sortOrder: sortOrder
+        sortOrder: sortOrder,
+        category: category,
     };
 
     const {
         data: menus,
-        isLoading
+        isFetching,
     } = useQuery({
-        queryKey: ["dataMenu", inputSearch, requestParams, reload],
+        queryKey: ["dataMenu", inputSearch, requestParams, reload, totalData],
         queryFn: async () => {
             if (inputSearch !== "") {
                 requestParams = Object.assign(requestParams, {search: inputSearch});
@@ -62,11 +66,16 @@ const MenuCardList = (props: PropTypes) => {
                 })
                 .then((res) => res.data)
                 .then((data) => {
-                    changeTotalData(data.metadata.total);
-                    
+                    changeTotalData(0);
+                    if (data.data.length > 0) {
+                        changeTotalData(data.metadata.total);
+                    }
                     return data.data;
                 })
-                .catch(() => []);
+                .catch(() => {
+                    changeTotalData(0);
+                    return [];
+                });
 
             return result;
         },
@@ -88,11 +97,13 @@ const MenuCardList = (props: PropTypes) => {
                         >
                             <Button 
                                 key={index} 
-                                variant="bordered"
-                                onPress={() => console.log("item pressed")} 
-                                className="p-4 font-bold"
+                                variant={item.value === category ? "flat" : "bordered"}
+                                onPress={() => changeCategory(item.value)} 
+                                className={cn("p-4 font-bold", {
+                                    "bg-teal-600 text-white": item.value === category,
+                                })}
                             >
-                                {item}
+                                {item.label}
                             </Button>
                         </div>
                     ))}
@@ -120,6 +131,13 @@ const MenuCardList = (props: PropTypes) => {
                     />
                 </div>
             }
+            {
+                !isFetching && totalData === 0 ? (
+                    <p className="flex items-center justify-center text-foreground-500 pt-2 dark:text-white">
+                        <b>OH NO!!!</b>&nbsp;No menu found&nbsp;<HiMiniFaceFrown size={25} />
+                    </p>
+                ): ""
+            }
             <div
                 className={cn(
                     "grid w-fill gap-4", 
@@ -130,7 +148,7 @@ const MenuCardList = (props: PropTypes) => {
                     }
                 )}
             >
-                {isLoading ? (
+                {isFetching ? (
                     <>
                     {[...Array(gridCols)].map((_,i)=>
                     (
@@ -178,7 +196,7 @@ const MenuCardList = (props: PropTypes) => {
                     )}
                     </>
                 ): ""}
-                {menus && menus.map((item: IMenu)=>(
+                { !isFetching && (menus.map((item: IMenu)=>(
                     <Card
                         key={item.id}
                         shadow="none"
@@ -224,7 +242,7 @@ const MenuCardList = (props: PropTypes) => {
                             </div>
                         </CardBody>
                     </Card>
-                ))}
+                )))}
             </div>
             <div className="flex items-center justify-center px-2 py-2 lg:justify-between mt-5">
                 <Select
@@ -251,8 +269,8 @@ const MenuCardList = (props: PropTypes) => {
                     aria-label="datatable-pagination"
                     isCompact 
                     showControls 
-                    page={isLoading ? 1 : page} 
-                    total={isLoading ? 1 :
+                    page={isFetching ? 1 : page} 
+                    total={isFetching ? 1 :
                         Math.ceil(totalData/(pageSize as unknown as number))
                     }
                     onChange={(e)=> {

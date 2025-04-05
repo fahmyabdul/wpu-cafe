@@ -12,12 +12,12 @@ const LIMIT_LISTS = [
 ];
 
 const MENU_CATEGORIES = [
-    "All",
-    "Coffee",
-    "Non-Coffee",
-    "Desserts",
-    "Pastries",
-    "Sandwiches",
+    {label: "All", value: ""},
+    {label: "Coffee", value: "Coffee"},
+    {label: "Non-Coffee", value: "Non-Coffee"},
+    {label: "Desserts", value: "Desserts"},
+    {label: "Pastries", value: "Pastries"},
+    {label: "Sandwiches", value: "Sandwiches"},
 ];
 
 const ORDER_TABLES = [
