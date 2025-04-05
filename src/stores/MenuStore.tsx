@@ -21,8 +21,8 @@ const useMenuStore = create<IMenuStore>((set) => (
         inputSearch: "",
         page: 1,
         pageSize: LIMIT_LISTS[0].label,
-        sortBy: "created_at",
-        sortOrder: "desc",
+        sortBy: "name",
+        sortOrder: "asc",
         totalData: 0,
         reload: false,
         search: (input: string) => set(

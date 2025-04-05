@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardFooter, Image, Input, Pagination, Select, SelectItem, Skeleton } from "@heroui/react";
+import { Button, Card, CardBody, Image, Input, Pagination, Select, SelectItem, Skeleton } from "@heroui/react";
 import { IMenu } from "../../../types/Menu";
 import menuServices from "../../../services/menu.service";
 import { useQuery } from "@tanstack/react-query";
@@ -59,13 +59,18 @@ const MenuCardList = () => {
 
     return (
         <div>
-            <div className="grid grid-cols-2 lg:grid-cols-6 w-full gap-2 mb-5">
+            <div className="flex flex-nowrap w-full overflow-x-auto mb-5 gap-2">
                 {MENU_CATEGORIES.map((item, index) => (
-                    <Card key={index} isPressable shadow="sm" onPress={() => console.log("item pressed")} className="hover:bg-foreground-700 hover:text-white dark:border-1 dark:border-foreground-600 dark:bg-transparent dark:hover:bg-foreground-600 dark:hover:text-black">
-                        <CardFooter className="text-small justify-center">
-                            <b>{item}</b>
-                        </CardFooter>
-                    </Card>
+                    <div>
+                    <Button 
+                        key={index} 
+                        variant="bordered"
+                        onPress={() => console.log("item pressed")} 
+                        className="p-4 font-bold"
+                    >
+                        {item}
+                    </Button>
+                    </div>
                 ))}
             </div>
             <div className="flex justify-end w-full items-center mb-5">
