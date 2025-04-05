@@ -21,6 +21,7 @@ interface IOrderStore {
     deleteOrderStore: () => void;
     addToCart: (type: string, id: string, name: string, price: number) => void;
     addNoteToCarItem: (id: string, notes: string) => void;
+    clearCart: () => void;
 }
 
 const useOrderStore = create<IOrderStore>()(
@@ -125,6 +126,10 @@ const useOrderStore = create<IOrderStore>()(
                     }
                 }
             ),
+            clearCart: () => set({
+                carts: [],
+                grandTotal: 0,
+            })
         }),
         {
             name: "orderStore",

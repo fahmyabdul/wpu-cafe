@@ -13,7 +13,7 @@ import MenuCardList from "../../components/ui/MenuCardList";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ordersServices from "../../services/orders.service";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Spinner } from "@heroui/spinner";
 
 interface PropTypes {
@@ -42,6 +42,8 @@ const OrderCreate = (props: PropTypes) => {
         register,
         handleSubmit,
         setError,
+        reset,
+        formState,
         formState: { errors }
     } = useForm<IOrderCreate>({
         resolver: yupResolver(orderValidator)
@@ -68,6 +70,7 @@ const OrderCreate = (props: PropTypes) => {
 
                 setIsCreating(false);
                 orderState.doReloadOrder();
+                orderState.clearCart();
                 onOpenChange();
             })
             .catch(() => {
@@ -86,6 +89,12 @@ const OrderCreate = (props: PropTypes) => {
             }
         );
     };
+
+    useEffect(() => {
+        if (formState.isSubmitSuccessful) {
+            reset({ customerName: "", tableNumber: 0, cart: [] })
+        }
+    }, [formState, reset]);
 
     return (
         <div className="min-w-full p-2">
