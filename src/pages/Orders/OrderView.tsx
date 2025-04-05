@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardFooter, Chip, Image, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/react";
+import { addToast, Button, Card, CardBody, Chip, Image, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/react";
 import { useQuery } from "@tanstack/react-query";
 import ordersServices from "../../services/orders.service";
 import useAuthStore from "../../stores/AuthStore";
@@ -52,6 +52,7 @@ export const OrderView = (props: PropTypes) => {
         },
     });
 
+
     const doCompleteOrder = async (id: string) => {
         await ordersServices.update(
             id, 
@@ -65,6 +66,22 @@ export const OrderView = (props: PropTypes) => {
             }
         )
         .then(() => {
+            addToast({
+                title: "Success!",
+                description: "Customer's order has been completed...",
+                timeout: 3000,
+                shouldShowTimeoutProgress: true,
+                color: "success",
+            });
+            doReloadOrder();
+        }).catch(()=>{
+            addToast({
+                title: "Woopss something happens!",
+                description: "Unable to complete order...",
+                timeout: 3000,
+                shouldShowTimeoutProgress: true,
+                color: "danger",
+            });
             doReloadOrder();
         });
     };
@@ -79,9 +96,25 @@ export const OrderView = (props: PropTypes) => {
             }
         )
         .then(() => {
+            addToast({
+                title: "Success!",
+                description: "Customer's order has been deleted...",
+                timeout: 3000,
+                shouldShowTimeoutProgress: true,
+                color: "success",
+            });
+            doReloadOrder();
+        }).catch(()=>{
+            addToast({
+                title: "Woopss something happens!",
+                description: "Unable to delete order...",
+                timeout: 3000,
+                shouldShowTimeoutProgress: true,
+                color: "danger",
+            });
             doReloadOrder();
         });
-    }
+    };
     
     return (
         <div className="min-w-full">
@@ -158,29 +191,46 @@ export const OrderView = (props: PropTypes) => {
                                         <hr className="mt-3"/>
                                         <div>
                                             <h1 className="font-bold text-lg mb-4">Items</h1>
-                                            <div className="grid grid-cols-2 lg:grid-cols-4 grid-flow-row gap-4">
+                                            <div className="grid grid-cols-2 lg:grid-cols-2 grid-flow-row gap-4">
                                                 {orderDetail.cart.map((item: IOrderCart, index:number) => (
-                                                    <Card 
-                                                        key={index} 
-                                                        isPressable 
-                                                        shadow="sm" 
-                                                        className="dark:bg-gray-800"
+                                                    <Card
+                                                        key={index}
+                                                        shadow="none"
+                                                        className="shadow-md rounded-xl"
                                                     >
-                                                        <CardBody className="overflow-visible p-0">
-                                                            <Image
-                                                                alt={item.menuItem?.name}
-                                                                className="w-full object-cover h-[140px] rounded-b-none"
-                                                                radius="lg"
-                                                                shadow="sm"
-                                                                src={item.menuItem?.image_url}
-                                                                width="100%"
-                                                            />
+                                                        <CardBody 
+                                                            className="overflow-visible p-0"
+                                                        >
+                                                            <div className="grid grid-cols-6 md:grid-cols-12 gap-2 md:gap-4 items-center justify-center">
+                                                                <div className="relative col-span-6 md:col-span-4">
+                                                                    <Image
+                                                                        alt={item.menuItem?.name}
+                                                                        aria-label={"menuimg-"+index}
+                                                                        className="object-cover h-[150px]"
+                                                                        shadow="md"
+                                                                        src={item.menuItem?.image_url}
+                                                                        width="100%"
+                                                                    />
+                                                                </div>
+                                                                <div className="flex flex-col col-span-6 md:col-span-8">
+                                                                    <div className="flex justify-between items-start pl-2 pr-2 pb-3 lg:pb-0 lg:pl-0 lg:pr-0">
+                                                                        <div className="flex flex-col lg:pr-4 gap-0 overflow-x-auto">
+                                                                            <h3 className="text-foreground/90 text-md lg:text-lg font-bold">{item.menuItem?.name}</h3>
+                                                                            <p className="text-foreground/80 text-sm lg:text-sm">{item.menuItem?.category}</p>
+                                                                            <div className="flex flex-nowrap mt-1 lg:mt-2 items-center">
+                                                                                <div className="mr-2 text-sm lg:text-md text-foreground-500">{item.quantity} x ${item.menuItem?.price} =</div>
+                                                                                <div className="text-md lg:text-large font-semibold">${item.quantity * (item.menuItem?.price as unknown as number)}</div>
+                                                                            </div>
+                                                                            {item.notes && 
+                                                                                <div className="text-nowrap py-2 text-default-500 overflow-x-auto text-sm">
+                                                                                    <div>{item.notes}</div>
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </CardBody>
-                                                        <CardFooter className="flex flex-col text-sm justify-between">
-                                                            <b>{item.menuItem?.name}</b>
-                                                            <p className="text-default-500">{item.quantity} x ${item.menuItem?.price}</p>
-                                                            <p className="text-default-600 font-medium">${item.quantity * (item.menuItem?.price === undefined ? 0 : item.menuItem?.price as unknown as number)}</p>
-                                                        </CardFooter>
                                                     </Card>
                                                 ))}
                                             </div>

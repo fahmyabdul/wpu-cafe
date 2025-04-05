@@ -1,4 +1,4 @@
-import { Button, Chip, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Spinner, useDisclosure } from "@heroui/react";
+import { addToast, Button, Chip, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Spinner, useDisclosure } from "@heroui/react";
 import { Key, ReactNode, useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { HiCheckBadge, HiEllipsisVertical, HiMiniFaceFrown, HiMiniPlusCircle } from "react-icons/hi2";
@@ -57,7 +57,7 @@ const Orders = () => {
 
     const {
         data: orders,
-        isLoading
+        isFetching,
     } = useQuery({
         queryKey: ["dataOrder", inputSearch, requestParams, reloadOrder],
         queryFn: async () => {
@@ -83,7 +83,6 @@ const Orders = () => {
         },
     });
 
-
     const doCompleteOrder = async (id: string) => {
         await ordersServices.update(
             id, 
@@ -97,6 +96,22 @@ const Orders = () => {
             }
         )
         .then(() => {
+            addToast({
+                title: "Success!",
+                description: "Customer's order has been completed...",
+                timeout: 3000,
+                shouldShowTimeoutProgress: true,
+                color: "success",
+            });
+            doReloadOrder();
+        }).catch(()=>{
+            addToast({
+                title: "Woopss something happens!",
+                description: "Unable to complete order...",
+                timeout: 3000,
+                shouldShowTimeoutProgress: true,
+                color: "danger",
+            });
             doReloadOrder();
         });
     };
@@ -111,6 +126,22 @@ const Orders = () => {
             }
         )
         .then(() => {
+            addToast({
+                title: "Success!",
+                description: "Customer's order has been deleted...",
+                timeout: 3000,
+                shouldShowTimeoutProgress: true,
+                color: "success",
+            });
+            doReloadOrder();
+        }).catch(()=>{
+            addToast({
+                title: "Woopss something happens!",
+                description: "Unable to delete order...",
+                timeout: 3000,
+                shouldShowTimeoutProgress: true,
+                color: "danger",
+            });
             doReloadOrder();
         });
     };
@@ -213,9 +244,9 @@ const Orders = () => {
                 <p className="mt-[-15px] lg:mt-[-35px] text-default-500 text-lg text-left w-full">Manage Customers Order</p>
                 <DataTable
                     columns={COLUMN_LISTS_ORDER}
-                    data={!isLoading ? orders : []}
+                    data={!isFetching ? orders : []}
                     emptyContent={
-                        !isLoading ? 
+                        !isFetching ? 
                         (
                             <p className="flex items-center justify-center"><b>OH NO!!!</b>&nbsp;Nobody Order Our Product&nbsp;<HiMiniFaceFrown size={25} /></p>
                         ) 
@@ -241,12 +272,12 @@ const Orders = () => {
                         changePage(1);
                         changePageSize(e.target.value as unknown as string);
                     }}
-                    isLoading={isLoading}
-                    currentPage={isLoading ? 1 : page}
+                    isLoading={isFetching}
+                    currentPage={isFetching ? 1 : page}
                     onChangePage={(e) => { 
                         changePage(e as unknown as number)
                     }}
-                    totalPages={ isLoading ? 1 :
+                    totalPages={ isFetching ? 1 :
                         Math.ceil(totalData/(pageSize as unknown as number))
                     }
                 />

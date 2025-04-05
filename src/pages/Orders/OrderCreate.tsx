@@ -66,7 +66,6 @@ const OrderCreate = (props: PropTypes) => {
                 }
             })
             .then(() => {
-
                 addToast({
                     title: "Success!",
                     description: "Customer's order has been created...",
@@ -252,7 +251,13 @@ const OrderCreate = (props: PropTypes) => {
                                     </div>
                                     <div>
                                         <h1 className="font-bold text-xl mb-4">Menus</h1>
-                                        <MenuCardList/>
+                                        <MenuCardList
+                                            isOrderable={true}
+                                            showSearch={true}
+                                            showCategoryFilter={true}
+                                            gridCols={2}
+                                            isFull={false}
+                                        />
                                     </div>
                                 </Form>
                             </ModalBody>

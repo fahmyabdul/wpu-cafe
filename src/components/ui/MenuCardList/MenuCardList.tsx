@@ -2,12 +2,29 @@ import { Button, Card, CardBody, Image, Input, Pagination, Select, SelectItem, S
 import { IMenu } from "../../../types/Menu";
 import menuServices from "../../../services/menu.service";
 import { useQuery } from "@tanstack/react-query";
-import useSearchStore from "../../../stores/MenuStore";
+import useMenuStore from "../../../stores/MenuStore";
 import { LIMIT_LISTS, MENU_CATEGORIES } from "../../../constants/constants";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import useOrderStore from "../../../stores/OrderStore";
+import { cn } from "../../../utils/cn";
 
-const MenuCardList = () => {
+interface PropTypes {
+    isOrderable: boolean;
+    showSearch: boolean;
+    showCategoryFilter: boolean;
+    gridCols: number;
+    isFull: boolean;
+}
+
+const MenuCardList = (props: PropTypes) => {
+    const {
+        isOrderable,
+        showSearch,
+        showCategoryFilter,
+        gridCols,
+        isFull,
+    } = props;
+
     // Using Zustand State
     const { 
         inputSearch,
@@ -21,7 +38,7 @@ const MenuCardList = () => {
         changePage,
         changePageSize,
         changeTotalData,
-    } = useSearchStore();
+    } = useMenuStore();
     
     let requestParams = {
         page: page,
@@ -58,45 +75,62 @@ const MenuCardList = () => {
     const orderState  = useOrderStore();    
 
     return (
-        <div>
-            <div className="flex flex-nowrap w-full overflow-x-auto mb-5 gap-2">
-                {MENU_CATEGORIES.map((item, index) => (
-                    <div>
-                    <Button 
-                        key={index} 
-                        variant="bordered"
-                        onPress={() => console.log("item pressed")} 
-                        className="p-4 font-bold"
-                    >
-                        {item}
-                    </Button>
-                    </div>
-                ))}
-            </div>
-            <div className="flex justify-end w-full items-center mb-5">
-                <Input
-                    placeholder="Search Menu Name"
-                    aria-label="input-search"
-                    type="search"
-                    isClearable
-                    onClear={()=> {
-                        search("");
+        <div className={
+                cn({
+                    "w-full": isFull,
+                })
+            }>
+            {showCategoryFilter &&
+                <div className="flex flex-nowrap w-full overflow-x-auto mb-5 gap-2">
+                    {MENU_CATEGORIES.map((item, index) => (
+                        <div>
+                        <Button 
+                            key={index} 
+                            variant="bordered"
+                            onPress={() => console.log("item pressed")} 
+                            className="p-4 font-bold"
+                        >
+                            {item}
+                        </Button>
+                        </div>
+                    ))}
+                </div>
+            }
+            {showSearch &&
+                <div className="flex justify-end w-full items-center mb-5">
+                    <Input
+                        placeholder="Search Menu Name"
+                        aria-label="input-search"
+                        type="search"
+                        isClearable
+                        onClear={()=> {
+                            search("");
+                            }
                         }
-                    }
-                    onChange={(e)=> {
-                            search(e.target.value);
+                        onChange={(e)=> {
+                                search(e.target.value);
+                            }
                         }
+                        startContent={
+                            <FaMagnifyingGlass className="text-default-400 pointer-events-none flex-shrink-0 mr-2 hidden sm:flex"/>
+                        }
+                        className="flex w-full"
+                    />
+                </div>
+            }
+            <div
+                className={cn(
+                    "grid w-fill gap-4", 
+                    {
+                        "grid-cols-1 lg:grid-cols-2": gridCols === 2,
+                        "grid-cols-2 lg:grid-cols-3": gridCols === 3,
+                        "grid-cols-2 lg:grid-cols-4": gridCols === 4,
                     }
-                    startContent={
-                        <FaMagnifyingGlass className="text-default-400 pointer-events-none flex-shrink-0 mr-2 hidden sm:flex"/>
-                    }
-                    className="flex w-full"
-                />
-            </div>
-            <div className="grid grid-cols-2 w-full gap-4">
+                )}
+            >
                 {isLoading ? (
                     <>
-                    {[...Array(6)].map((_,i)=>
+                    {[...Array(gridCols)].map((_,i)=>
                     (
                         <Card
                             key={`menu-${i}`}
@@ -110,10 +144,9 @@ const MenuCardList = () => {
                                     <div className="grid grid-cols-6 md:grid-cols-12 gap-6 md:gap-4 items-center justify-center">
                                         <div className="relative col-span-6 md:col-span-4">
                                             <Image
-                                                alt="Album cover"
+                                                alt="Item Image"
                                                 className="object-cover h-[150px]"
                                                 shadow="md"
-                                                src="https://heroui.com/images/album-cover.png"
                                                 width="100%"
                                             />
                                         </div>
@@ -123,13 +156,15 @@ const MenuCardList = () => {
                                                     <h3 className="text-foreground/90 text-md lg:text-lg font-bold">Item Name</h3>
                                                     <p className="text-foreground/80 text-sm lg:text-sm">Item Category</p>
                                                     <h1 className="text-large font-medium mt-2">Item Price</h1>
-                                                    <div className="mt-2 grid grid-cols-2">
-                                                        <Button
-                                                            className="bg-teal-600 text-white"
-                                                        >
-                                                            Order
-                                                        </Button>
-                                                    </div>
+                                                    {isOrderable &&
+                                                        <div className="mt-2 grid grid-cols-2">
+                                                            <Button
+                                                                className="bg-teal-600 text-white"
+                                                            >
+                                                                Order
+                                                            </Button>
+                                                        </div>
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -168,16 +203,18 @@ const MenuCardList = () => {
                                             <p className="text-foreground/80 text-sm lg:text-sm">{item.category}</p>
                                             <h1 className="text-large font-medium mt-2">${item.price}</h1>
                                             <div className="mt-2 grid grid-cols-2">
-                                                <Button
-                                                    className="bg-teal-600 text-white"
-                                                    onPress={ 
-                                                        () => {
-                                                            orderState.addToCart("increment", item.id, item.name, item.price)
+                                                {isOrderable &&
+                                                    <Button
+                                                        className="bg-teal-600 text-white"
+                                                        onPress={ 
+                                                            () => {
+                                                                orderState.addToCart("increment", item.id, item.name, item.price)
+                                                            }
                                                         }
-                                                    }
-                                                >
-                                                    Order
-                                                </Button>
+                                                    >
+                                                        Order
+                                                    </Button>
+                                                }
                                             </div>
                                         </div>
                                     </div>

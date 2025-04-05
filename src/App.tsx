@@ -19,7 +19,7 @@ function App() {
         html.classList.remove("dark")
         html.classList.add("light")
     }
-  })
+  });
 
   return (
     <QueryClientProvider client={queryClient}>

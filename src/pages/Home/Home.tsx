@@ -1,16 +1,19 @@
-import { Button, Card, CardFooter, Input } from "@heroui/react";
-import { HiOutlineEye } from "react-icons/hi2";
-import ListMenu from "../../components/ui/ListMenu";
+import { Input } from "@heroui/react";
 import FeaturedMenu from "../../components/ui/FeaturedMenu/FeaturedMenu";
 import MainLayout from "../../components/layouts/MainLayout";
 import useMenuStore from "../../stores/MenuStore";
 import { FaMagnifyingGlass } from "react-icons/fa6";
-import { MENU_CATEGORIES } from "../../constants/constants";
+import MenuCardList from "../../components/ui/MenuCardList";
+import { useEffect } from "react";
 
 
 const Home = () => {
-    const { search } = useMenuStore();
+    const { search, changePageSize } = useMenuStore();
 
+    useEffect(()=>{
+        changePageSize("12");
+    },[changePageSize])
+    
     return (
         <MainLayout title="">
             <div
@@ -30,7 +33,7 @@ const Home = () => {
                 >
                     <FeaturedMenu/>
                 </div>
-                <div className="grid grid-cols-6 w-full gap-10">
+                {/* <div className="grid grid-cols-6 w-full gap-10">
                     {MENU_CATEGORIES.map((item, index) => (
                         <Card key={index} isPressable shadow="sm" onPress={() => console.log("item pressed")} className="hover:bg-foreground-700 hover:text-white dark:border-1 dark:border-foreground-600 dark:bg-transparent dark:hover:bg-foreground-600 dark:hover:text-black">
                             <CardFooter className="text-small justify-center">
@@ -38,7 +41,7 @@ const Home = () => {
                             </CardFooter>
                         </Card>
                     ))}
-                </div>
+                </div> */}
                 <div
                     className="grid grid-cols-2 w-full"
                 >
@@ -73,14 +76,14 @@ const Home = () => {
                 <div
                     className="flex w-full"
                 >
-                    <ListMenu/>
-                </div>
-                <div
-                    className="flex w-full"
-                >
-                    <Button color="success" variant="solid" className="w-full p-5 xl:p-7 text-white xl:text-lg">
-                    <HiOutlineEye size={25} />See Everything We Had To Offer
-                    </Button>
+                    {/* <ListMenu/> */}
+                    <MenuCardList 
+                        isOrderable={false}
+                        showSearch={false}
+                        showCategoryFilter={true}
+                        gridCols={3}
+                        isFull
+                    />
                 </div>
             </div>
         </MainLayout>
