@@ -1,7 +1,7 @@
 import { Button, Chip, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Spinner, useDisclosure } from "@heroui/react";
 import { Key, ReactNode, useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { HiCheckBadge, HiEllipsisVertical, HiMiniFaceFrown, HiMiniPlusCircle, HiMiniTrash, HiOutlineEye } from "react-icons/hi2";
+import { HiCheckBadge, HiEllipsisVertical, HiMiniFaceFrown, HiMiniPlusCircle } from "react-icons/hi2";
 import { useQuery } from "@tanstack/react-query";
 import ordersServices from "../../services/orders.service";
 import useAuthStore from "../../stores/AuthStore";
@@ -11,6 +11,8 @@ import DataTable from "../../components/ui/DataTable";
 import { OrderView } from "./OrderView";
 import DateReformat from "../../components/ui/DateReformat";
 import { cn } from "../../utils/cn";
+import { FaRegEye, FaTrashCan } from "react-icons/fa6";
+import OrderCreate from "./OrderCreate";
 
 const COLUMN_LISTS_ORDER = [
     {name: "No", uid: "no"},
@@ -24,7 +26,8 @@ const COLUMN_LISTS_ORDER = [
 
 const Orders = () => {
     const navigate = useNavigate();
-    const {isOpen, onOpen, onOpenChange} = useDisclosure();
+    const modalDetail = useDisclosure();
+    const modalCreate = useDisclosure();
     const [viewId, setViewId] = useState("");
 
     // Using Zustand State
@@ -40,6 +43,7 @@ const Orders = () => {
         changePage,
         changePageSize,
         changeTotalData,
+        doReloadOrder,
     } = useOrderStore();
 
     const { accessToken } = useAuthStore();
@@ -78,6 +82,38 @@ const Orders = () => {
             return result;
         },
     });
+
+
+    const doCompleteOrder = async (id: string) => {
+        await ordersServices.update(
+            id, 
+            {
+                status: "COMPLETED"
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                }
+            }
+        )
+        .then(() => {
+            doReloadOrder();
+        });
+    };
+
+    const doDeleteOrder = async(id: string) => {
+        await ordersServices.delete(
+            id,
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                }
+            }
+        )
+        .then(() => {
+            doReloadOrder();
+        });
+    };
     
     const renderCell = useCallback(
         (index: number, order: Record<string, unknown>, columnKey: Key) => {
@@ -123,27 +159,31 @@ const Orders = () => {
                                     key="detail-orders" 
                                     onPress={()=>{
                                         setViewId(order.id as unknown as string);
-                                        onOpen();
+                                        modalDetail.onOpen();
                                     }}
                                     textValue="View"
                                 >
-                                    <p className="flex items-center justify-start"><HiOutlineEye size={18} />&nbsp;View</p>
+                                    <p className="flex items-center justify-start"><FaRegEye size={16} />&nbsp;View</p>
                                 </DropdownItem>
                                 {order.status === "COMPLETED" ? 
                                     (
                                         <DropdownItem 
                                             key="delete-orders"
-                                            onPress={() => navigate("/orders/"+order.id+"/delete")}
+                                            onPress={() => {
+                                                doDeleteOrder(order.id as unknown as string);
+                                            }}
                                             textValue="Delete"
                                         >
-                                            <p className="flex items-center justify-start text-danger"><HiMiniTrash size={18} />&nbsp;Delete</p>
+                                            <p className="flex items-center justify-start text-danger"><FaTrashCan size={16} />&nbsp;Delete</p>
                                         </DropdownItem>
                                     )
                                     :
                                     (
                                         <DropdownItem 
                                             key="complete-orders" 
-                                            onPress={() => navigate("/orders/"+order.id+"/complete")}
+                                            onPress={() => {
+                                                doCompleteOrder(order.id as unknown as string);
+                                            }}
                                             textValue="Complete"
                                         >
                                             <p className="flex items-center justify-start text-teal-600 dark:text-teal-500"><HiCheckBadge size={18} />&nbsp;Complete</p>
@@ -162,13 +202,15 @@ const Orders = () => {
 
     return (
         <MainLayout title="Orders">
-            <OrderView id={viewId} isOpen={isOpen} onOpenChange={onOpenChange}/>
+            <OrderView id={viewId} isOpen={modalDetail.isOpen} onOpenChange={modalDetail.onOpenChange}/>
+            <OrderCreate isOpen={modalCreate.isOpen} onOpenChange={modalCreate.onOpenChange}/>
             <div className="flex flex-col gap-5 lg:gap-10 justify-center items-center w-full xl:w-8/12 px-5 xl:px-0">
                 <h1
-                        className="font-bold text-2xl bg-gradient-to-r bg-clip-text from-sky-600 to-teal-400 text-transparent text-left w-full"
+                        className="font-bold text-3xl text-teal-600 text-left w-full"
                     >
                         Orders
                 </h1>
+                <p className="mt-[-15px] lg:mt-[-35px] text-default-500 text-lg text-left w-full">Manage Customers Order</p>
                 <DataTable
                     columns={COLUMN_LISTS_ORDER}
                     data={!isLoading ? orders : []}
@@ -187,12 +229,16 @@ const Orders = () => {
                             <HiMiniPlusCircle size={20}/>Order
                         </>
                     }
+                    searchPlaceholder="Search by Customer Name"
                     onChangeSearch={(e) => { search(e.target.value)}}
                     onClearSearch={() => { search("")}}
-                    onClickButtonTopContent={() => {}}
+                    onClickButtonTopContent={() => {
+                        modalCreate.onOpen();
+                    }}
                     renderCell={renderCell}
                     limit={pageSize}
                     onChangeLimit={(e) => {
+                        changePage(1);
                         changePageSize(e.target.value as unknown as string);
                     }}
                     isLoading={isLoading}

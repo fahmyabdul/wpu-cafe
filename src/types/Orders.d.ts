@@ -3,7 +3,10 @@ import { IMenu } from "./Menu";
 interface IOrderCart {
     menuItemId?: string;
     menuItem?: IMenu;
+    name?: string;
     quantity: number;
+    price?: number;
+    totalPrice?: number;
     notes?: string;
 }
 

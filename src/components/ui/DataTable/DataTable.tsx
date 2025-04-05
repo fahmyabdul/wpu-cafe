@@ -12,6 +12,7 @@ interface PropTypes {
     currentPage: number;
     totalPages: number;
     buttonTopContentLabel?: ReactNode;
+    searchPlaceholder?: string;
     onChangeSearch: (e: ChangeEvent<HTMLInputElement>) => void;
     onClearSearch: () => void;
     onClickButtonTopContent?: () => void;
@@ -29,6 +30,7 @@ const DataTable = (props: PropTypes) => {
         limit,
         buttonTopContentLabel, 
         onChangeLimit,
+        searchPlaceholder,
         onChangeSearch, 
         onClearSearch, 
         onClickButtonTopContent, 
@@ -42,25 +44,28 @@ const DataTable = (props: PropTypes) => {
 
     const TopContent = useMemo(() => {
         return (
-            <div className="flex flex-col-reverse items-start justify-between gap-y-4 lg:flex-row lg:items-center">
+            <div className="flex  justify-between gap-y-4 flex-row items-center">
                 <Input 
                     isClearable 
                     aria-label="datatable-search"
-                    className="w-full sm:max-w-[24%]" 
-                    placeholder="Search by name" 
+                    className="max-w-full sm:max-w-[34%] mr-2" 
+                    placeholder={searchPlaceholder ? searchPlaceholder : "Search by Name"}
                     startContent={<FaMagnifyingGlass/>}
                     onClear={onClearSearch}
                     onChange={onChangeSearch}
                 />
                 {buttonTopContentLabel && (
-                    <Button className="bg-teal-600 text-white" onPress={onClickButtonTopContent}>
-                        {buttonTopContentLabel}
-                    </Button>
+                    <div className="w-fit">
+                        <Button className="bg-teal-600 text-white" onPress={onClickButtonTopContent}>
+                            {buttonTopContentLabel}
+                        </Button>
+                    </div>
                 )}
             </div>
         )
     }, [
         buttonTopContentLabel, 
+        searchPlaceholder,
         onChangeSearch, 
         onClearSearch, 
         onClickButtonTopContent,

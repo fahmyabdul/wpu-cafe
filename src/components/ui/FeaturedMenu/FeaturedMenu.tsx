@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Navigation, Pagination, A11y } from "swiper/modules";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { cn } from "../../../utils/cn";
+import Stamp from "../Stamp";
 
 const FeaturedMenu = () => {    
     const requestParams = {
@@ -83,8 +84,6 @@ const FeaturedMenu = () => {
                 navigation
                 pagination={{ clickable: true }}
                 onSwiper={(swiper) => console.log(swiper)}
-                // onSlideChange={() => console.log('slide change')}
-                // onClick={(swiper) =>{ console.log(swiper)}}
             >
                 {!isLoading && menus.map((item: IMenu, i: number)=>(
                     <SwiperSlide>
@@ -93,7 +92,7 @@ const FeaturedMenu = () => {
                             isPressable
                             shadow="none"
                             onPress={()=> console.log(`Pressed ${item.name}`)}
-                            className="w-full min-h-[465px] lg:min-h-full"
+                            className="w-full min-h-[465px] md:min-h-full"
                         >
                             <CardBody
                                 // className="p-0 bg-gradient-to-r from-sky-600 to-teal-400"
@@ -108,6 +107,10 @@ const FeaturedMenu = () => {
                                 <div
                                     className="grid grid-cols-6 md:grid-cols-12 gap-6 md:gap-4 items-center justify-center"
                                 >
+
+                                    <Stamp classes="absolute bottom-5 right-5 xl:bottom-10 xl:right-10 -rotate-12 rounded-xl border-white border-5 lg:border-[5px] text-center p-1 lg:p-2">
+                                        <span className="text-white text-sm lg:text-2xl font-bold">TASTY!!!</span>
+                                    </Stamp>
                                     <div className="relative col-span-6 md:col-span-4 p-2">
                                         <Image
                                             alt={item.name}
@@ -118,7 +121,7 @@ const FeaturedMenu = () => {
                                             width="100%"
                                         />
                                     </div>
-                                    <div className="flex flex-col col-span-6 md:col-span-8 gap-3 ml-5 mb-10 mt-2 lg:mb-0 text-white">
+                                    <div className="flex flex-col col-span-6 md:col-span-8 gap-3 ml-5 mb-10 mt-2 lg:mb-0 text-white z-10">
                                         <h1 className="text-3xl font-bold">{item.name}</h1>
                                         <p className=" text-xl lg:text-2xl">
                                             Only&nbsp;

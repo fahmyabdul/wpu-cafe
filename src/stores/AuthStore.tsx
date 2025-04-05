@@ -18,7 +18,7 @@ const useAuthStore = create<IAuth>()(
         }),
         {
             name: "accessToken",
-            storage: createJSONStorage(()=> sessionStorage)
+            storage: createJSONStorage(()=> localStorage)
         }
     )
 )

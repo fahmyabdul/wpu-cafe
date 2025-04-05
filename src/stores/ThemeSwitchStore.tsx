@@ -14,7 +14,7 @@ const useThemeSwitchStore = create<IThemeSwitch>()(
         }),
         {
             name: "theme",
-            storage: createJSONStorage(()=> sessionStorage)
+            storage: createJSONStorage(()=> localStorage)
         }
     )
 )

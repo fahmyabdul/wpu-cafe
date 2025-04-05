@@ -1,34 +1,26 @@
-import { Button, Input } from "@heroui/react";
+import { Button, Card, CardFooter, Input } from "@heroui/react";
 import { HiOutlineEye } from "react-icons/hi2";
 import ListMenu from "../../components/ui/ListMenu";
 import FeaturedMenu from "../../components/ui/FeaturedMenu/FeaturedMenu";
 import MainLayout from "../../components/layouts/MainLayout";
-import useSearchStore from "../../stores/MenuSearchStore";
+import useMenuStore from "../../stores/MenuStore";
 import { FaMagnifyingGlass } from "react-icons/fa6";
+import { MENU_CATEGORIES } from "../../constants/constants";
 
 
 const Home = () => {
-    const { search } = useSearchStore();
+    const { search } = useMenuStore();
 
     return (
         <MainLayout title="">
             <div
                 className="flex flex-col w-full pl-6 pr-6 xl:pl-0 xl:pr-0 xl:w-8/12 gap-6"
             >
-                {/* <div
-                    className="flex w-full items-center justify-center p-5"
-                >
-                    <h1
-                        className="font-bold text-xl text-teal-600"
-                    >
-                        Welcome to WPU Cafe!!!
-                    </h1>
-                </div> */}
                 <div
                     className="flex w-full items-center"
                 >
                     <h1
-                        className="font-bold text-2xl bg-gradient-to-r bg-clip-text from-sky-600 to-teal-400 text-transparent"
+                        className="font-bold text-3xl text-teal-600 dark:text-teal-500"
                     >
                         Featured
                     </h1>
@@ -38,12 +30,21 @@ const Home = () => {
                 >
                     <FeaturedMenu/>
                 </div>
+                <div className="grid grid-cols-6 w-full gap-10">
+                    {MENU_CATEGORIES.map((item, index) => (
+                        <Card key={index} isPressable shadow="sm" onPress={() => console.log("item pressed")} className="hover:bg-foreground-700 hover:text-white dark:border-1 dark:border-foreground-600 dark:bg-transparent dark:hover:bg-foreground-600 dark:hover:text-black">
+                            <CardFooter className="text-small justify-center">
+                                <b>{item}</b>
+                            </CardFooter>
+                        </Card>
+                    ))}
+                </div>
                 <div
                     className="grid grid-cols-2 w-full"
                 >
                     <div className="flex w-fit items-center">
                         <h1
-                            className="font-bold text-2xl bg-gradient-to-r bg-clip-text from-sky-600 to-teal-400 text-transparent"
+                            className="font-bold text-3xl text-teal-600 dark:text-teal-500"
                         >
                             Our Menus
                         </h1>
