@@ -1,4 +1,4 @@
-import { addToast, Button, Card, CardBody, Chip, Image, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/react";
+import { addToast, Button, ButtonGroup, Card, CardBody, Chip, Image, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/react";
 import { useQuery } from "@tanstack/react-query";
 import ordersServices from "../../services/orders.service";
 import CustomSpinner from "../../components/ui/CustomSpinner";
@@ -221,32 +221,32 @@ export const OrderView = (props: PropTypes) => {
                                     <ModalFooter className="mt-2">
                                         {orderDetail.status === "COMPLETED" ? 
                                         (
-                                            <>
-                                            <Button 
-                                                color="primary" 
-                                                onPress={() => {
-                                                    doDeleteOrder(orderDetail.id);
-                                                    onClose();
-                                                }}
-                                                className="bg-gray-500 gap-2"
-                                                size="lg"
+                                            <ButtonGroup
                                                 fullWidth
                                             >
-                                                <FaReceipt size={22} />Print Invoice
-                                            </Button>
-                                            <Button 
-                                                color="primary" 
-                                                onPress={() => {
-                                                    doDeleteOrder(orderDetail.id);
-                                                    onClose();
-                                                }}
-                                                className="bg-danger gap-2"
-                                                size="lg"
-                                                fullWidth
-                                            >
-                                                <FaTrashCan size={22} />Delete This Order
-                                            </Button>
-                                            </>
+                                                <Button 
+                                                    color="primary" 
+                                                    onPress={() => {
+                                                        doDeleteOrder(orderDetail.id);
+                                                        onClose();
+                                                    }}
+                                                    className="bg-gray-500 gap-2"
+                                                    size="lg"
+                                                >
+                                                    <FaReceipt />Print Invoice
+                                                </Button>
+                                                <Button 
+                                                    color="primary" 
+                                                    onPress={() => {
+                                                        doDeleteOrder(orderDetail.id);
+                                                        onClose();
+                                                    }}
+                                                    className="bg-danger gap-2"
+                                                    size="lg"
+                                                >
+                                                    <FaTrashCan />Delete Order
+                                                </Button>
+                                            </ButtonGroup>
                                         )
                                         :
                                         (
