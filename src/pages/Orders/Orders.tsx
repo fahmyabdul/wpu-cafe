@@ -1,6 +1,5 @@
 import { addToast, Button, Chip, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Spinner, useDisclosure } from "@heroui/react";
 import { Key, ReactNode, useCallback, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { HiCheckBadge, HiEllipsisVertical, HiMiniFaceFrown, HiMiniPlusCircle } from "react-icons/hi2";
 import { useQuery } from "@tanstack/react-query";
 import ordersServices from "../../services/orders.service";
@@ -25,7 +24,6 @@ const COLUMN_LISTS_ORDER = [
 ]
 
 const Orders = () => {
-    const navigate = useNavigate();
     const modalDetail = useDisclosure();
     const modalCreate = useDisclosure();
     const [viewId, setViewId] = useState("");
@@ -65,12 +63,7 @@ const Orders = () => {
                 requestParams = Object.assign(requestParams, {search: inputSearch});
             }
 
-            const result = await ordersServices.getAll({
-                    params: requestParams,
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    }
-                })
+            const result = await ordersServices.getAll(requestParams)
                 .then((res) => res.data)
                 .then((data) => {
                     changeTotalData(data.metadata.total)
@@ -83,17 +76,12 @@ const Orders = () => {
         },
     });
 
-    const doCompleteOrder = async (id: string) => {
+    const doCompleteOrder = useCallback(async (id: string) => {
         await ordersServices.update(
             id, 
             {
                 status: "COMPLETED"
             },
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                }
-            }
         )
         .then(() => {
             addToast({
@@ -114,17 +102,10 @@ const Orders = () => {
             });
             doReloadOrder();
         });
-    };
+    },[doReloadOrder]);
 
-    const doDeleteOrder = async(id: string) => {
-        await ordersServices.delete(
-            id,
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                }
-            }
-        )
+    const doDeleteOrder = useCallback(async(id: string) => {
+        await ordersServices.delete(id)
         .then(() => {
             addToast({
                 title: "Success!",
@@ -144,7 +125,7 @@ const Orders = () => {
             });
             doReloadOrder();
         });
-    };
+    },[accessToken, doReloadOrder]);
     
     const renderCell = useCallback(
         (index: number, order: Record<string, unknown>, columnKey: Key) => {
@@ -227,8 +208,7 @@ const Orders = () => {
                 default:
                     return cellValue as unknown as ReactNode;
             }
-        },
-        [navigate]
+        }, [doCompleteOrder, doDeleteOrder, modalDetail]
     );
 
     return (

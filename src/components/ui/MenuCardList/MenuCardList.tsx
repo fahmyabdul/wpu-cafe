@@ -83,15 +83,17 @@ const MenuCardList = (props: PropTypes) => {
             {showCategoryFilter &&
                 <div className="flex flex-nowrap w-full overflow-x-auto mb-5 gap-2">
                     {MENU_CATEGORIES.map((item, index) => (
-                        <div>
-                        <Button 
-                            key={index} 
-                            variant="bordered"
-                            onPress={() => console.log("item pressed")} 
-                            className="p-4 font-bold"
+                        <div
+                            key={"menucategory-"+index}
                         >
-                            {item}
-                        </Button>
+                            <Button 
+                                key={index} 
+                                variant="bordered"
+                                onPress={() => console.log("item pressed")} 
+                                className="p-4 font-bold"
+                            >
+                                {item}
+                            </Button>
                         </div>
                     ))}
                 </div>
@@ -156,15 +158,15 @@ const MenuCardList = (props: PropTypes) => {
                                                     <h3 className="text-foreground/90 text-md lg:text-lg font-bold">Item Name</h3>
                                                     <p className="text-foreground/80 text-sm lg:text-sm">Item Category</p>
                                                     <h1 className="text-large font-medium mt-2">Item Price</h1>
-                                                    {isOrderable &&
-                                                        <div className="mt-2 grid grid-cols-2">
+                                                    <div className="mt-2 grid grid-cols-2">
+                                                        {isOrderable &&
                                                             <Button
                                                                 className="bg-teal-600 text-white"
                                                             >
                                                                 Order
                                                             </Button>
-                                                        </div>
-                                                    }
+                                                        }
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

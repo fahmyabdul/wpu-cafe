@@ -31,4 +31,12 @@ interface IOrderUpdate {
     status: string;
 }
 
-export type { IOrderCart, IOrder, IOrderCreate, IOrderUpdate };
+interface IOrderFilter {
+    page?: number;
+    pageSize?: string;
+    sortBy?: string;
+    sortOrder?: string;
+    search?: string;
+}
+
+export type { IOrderCart, IOrder, IOrderCreate, IOrderUpdate, IOrderFilter };

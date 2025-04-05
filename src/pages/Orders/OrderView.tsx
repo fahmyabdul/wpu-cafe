@@ -1,7 +1,6 @@
 import { addToast, Button, Card, CardBody, Chip, Image, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/react";
 import { useQuery } from "@tanstack/react-query";
 import ordersServices from "../../services/orders.service";
-import useAuthStore from "../../stores/AuthStore";
 import CustomSpinner from "../../components/ui/CustomSpinner";
 import { IOrderCart } from "../../types/Orders";
 import { HiCheckBadge } from "react-icons/hi2";
@@ -24,7 +23,6 @@ export const OrderView = (props: PropTypes) => {
         onOpenChange,
     } = props;
 
-    const { accessToken } = useAuthStore();
     const { 
         reloadOrder,
         doReloadOrder,
@@ -39,14 +37,10 @@ export const OrderView = (props: PropTypes) => {
             if (!id){
                 return [];
             }
-            const result = await ordersServices.getById(id,{
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    }
-                })
-                .then((res) => res.data)
-                .then((data) => data)
-                .catch(() => []);
+            const result = await ordersServices.getById(id)
+            .then((res) => res.data)
+            .then((data) => data)
+            .catch(() => []);
 
             return result;
         },
@@ -59,11 +53,6 @@ export const OrderView = (props: PropTypes) => {
             {
                 status: "COMPLETED"
             },
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                }
-            }
         )
         .then(() => {
             addToast({
@@ -87,14 +76,7 @@ export const OrderView = (props: PropTypes) => {
     };
 
     const doDeleteOrder = async(id: string) => {
-        await ordersServices.delete(
-            id,
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                }
-            }
-        )
+        await ordersServices.delete(id)
         .then(() => {
             addToast({
                 title: "Success!",

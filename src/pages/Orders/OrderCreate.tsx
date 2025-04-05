@@ -13,7 +13,6 @@ import MenuCardList from "../../components/ui/MenuCardList";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ordersServices from "../../services/orders.service";
-import useAuthStore from "../../stores/AuthStore";
 import { useState } from "react";
 import { Spinner } from "@heroui/spinner";
 
@@ -28,7 +27,6 @@ const OrderCreate = (props: PropTypes) => {
         onOpenChange,
     } = props;
 
-    const { accessToken } = useAuthStore();
     const orderState  = useOrderStore();
     const [isCreating, setIsCreating] = useState(false);
 
@@ -58,13 +56,7 @@ const OrderCreate = (props: PropTypes) => {
         setIsCreating(true);
         
         data = Object.assign(data, {cart: orderState.carts});
-        await ordersServices.create(
-            data, 
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                }
-            })
+        await ordersServices.create(data)
             .then(() => {
                 addToast({
                     title: "Success!",
