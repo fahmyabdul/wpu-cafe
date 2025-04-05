@@ -3,7 +3,6 @@ import { Key, ReactNode, useCallback, useState } from "react";
 import { HiCheckBadge, HiEllipsisVertical, HiMiniFaceFrown, HiMiniPlusCircle } from "react-icons/hi2";
 import { useQuery } from "@tanstack/react-query";
 import ordersServices from "../../services/orders.service";
-import useAuthStore from "../../stores/AuthStore";
 import useOrderStore from "../../stores/OrderStore";
 import MainLayout from "../../components/layouts/MainLayout";
 import DataTable from "../../components/ui/DataTable";
@@ -43,8 +42,6 @@ const Orders = () => {
         changeTotalData,
         doReloadOrder,
     } = useOrderStore();
-
-    const { accessToken } = useAuthStore();
     
     let requestParams = {
         page: page,
@@ -125,7 +122,7 @@ const Orders = () => {
             });
             doReloadOrder();
         });
-    },[accessToken, doReloadOrder]);
+    },[doReloadOrder]);
     
     const renderCell = useCallback(
         (index: number, order: Record<string, unknown>, columnKey: Key) => {
