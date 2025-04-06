@@ -97,7 +97,7 @@ const MenuCardList = (props: PropTypes) => {
                         >
                             <Button 
                                 key={index} 
-                                variant={item.value === category ? "flat" : "bordered"}
+                                variant={item.value === category ? "flat" : "ghost"}
                                 onPress={() => changeCategory(item.value)} 
                                 className={cn("p-4 font-bold", {
                                     "bg-teal-600 text-white": item.value === category,
