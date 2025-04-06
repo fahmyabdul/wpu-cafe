@@ -31,7 +31,7 @@ const OrderCreate = (props: PropTypes) => {
     const [isCreating, setIsCreating] = useState(false);
 
     const orderValidator = yup.object().shape({
-        customerName: yup.string().required("Please input Customer's name!"),
+        customerName: yup.string().required("Please input Customer's Name!"),
         tableNumber: yup.number().typeError("Please select Table Number!").required("Please select Table Number!"),
         cart: yup.array().required("No order to be found, please add items!"),
     });
@@ -143,7 +143,7 @@ const OrderCreate = (props: PropTypes) => {
                                                         className="w-full lg:w-[10%]"
                                                         isInvalid={errors.tableNumber !== undefined}
                                                         aria-label="select-tableNumber"
-                                                        errorMessage={errors.tableNumber?.message}
+                                                        errorMessage={(<p className="text-nowrap">{errors.tableNumber?.message}</p>)}
                                                     >
                                                         {ORDER_TABLES.map((item) => (
                                                             <SelectItem key={item.value}>{item.label}</SelectItem>
