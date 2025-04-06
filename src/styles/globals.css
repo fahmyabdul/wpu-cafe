@@ -7,7 +7,6 @@
 @tailwind utilities;
 @tailwind variants;
 
-
 .swiper-button-prev:after, .swiper-rtl,.swiper-button-next:after, .swiper-rtl{
     color: white;
 }
@@ -16,45 +15,25 @@
     background: white;
 }
 
-
-.stamp {
-  transform: rotate(12deg);
-	color: #555;
-	font-size: 3rem;
-	font-weight: 700;
-	border: 0.25rem solid #555;
-	display: inline-block;
-	padding: 0.25rem 1rem;
-	text-transform: uppercase;
-	border-radius: 1rem;
-	font-family: 'Courier';
-	-webkit-mask-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/8399/grunge.png');
-    -webkit-mask-size: 944px 604px;
-  mix-blend-mode: multiply;
+.bg-radial-gradient {
+	background: radial-gradient(closest-side, rgba(0, 10, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%)
 }
 
-.is-nope {
-  color: #D23;
-  border: 0.5rem double #D23;
-  transform: rotate(3deg);
-	-webkit-mask-position: 2rem 3rem;
-  font-size: 2rem;  
+.animated-background {
+    background-size: 400%;
+
+    -webkit-animation: animation 3s ease infinite;
+    -moz-animation: animation 3s ease infinite;
+    animation: animation 3s ease infinite;
 }
 
-.is-approved {
-	color: #0A9928;
-	border: 0.5rem solid #0A9928;
-	-webkit-mask-position: 13rem 6rem;
-	transform: rotate(-14deg);
-  border-radius: 0;
-} 
-
-.is-draft {
-	color: #C4C4C4;
-	border: 1rem double #C4C4C4;
-	transform: rotate(-5deg);
-  font-size: 6rem;
-  font-family: "Open sans", Helvetica, Arial, sans-serif;
-  border-radius: 0;
-  padding: 0.5rem;
-} 
+@keyframes animation {
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+    
+    50% {
+        background-position: 100% 50%;
+    }
+}

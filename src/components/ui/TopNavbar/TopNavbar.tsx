@@ -52,8 +52,8 @@ const TopNavbar = () => {
             onMenuOpenChange={setIsMenuOpen}
             maxWidth="full"
             classNames={{ 
-                base: [
-                    "shadow-md"
+                wrapper:[
+                    "xl:w-9/12 xl:p-0 xl:m-0"
                 ],
                 item:[
                     "flex",
@@ -197,7 +197,7 @@ const TopNavbar = () => {
                     }
                 </NavbarItem>
             </NavbarContent>
-            <NavbarMenu className="mt-2">
+            <NavbarMenu className="pt-5">
                 {listMenu && listMenu.map((item: TopNavbarItem)=> (
                     <NavbarMenuItem aria-label={"navitem"+item.key} isActive={ item.href === currentLocation.pathname ? true : false }>
                         <Link aria-current="page" className={item.href === currentLocation.pathname ? "text-teal-600" : "text-foreground"} href={item.href}>

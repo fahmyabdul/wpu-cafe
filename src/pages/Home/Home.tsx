@@ -17,7 +17,7 @@ const Home = () => {
     return (
         <MainLayout title="">
             <div
-                className="flex flex-col w-full pl-6 pr-6 xl:pl-0 xl:pr-0 xl:w-8/12 gap-6"
+                className="flex flex-col w-full pl-6 pr-6 xl:pl-0 xl:pr-0 xl:w-9/12 gap-6"
             >
                 <div
                     className="flex w-full items-center"
@@ -76,7 +76,6 @@ const Home = () => {
                 <div
                     className="flex w-full"
                 >
-                    {/* <ListMenu/> */}
                     <MenuCardList 
                         isOrderable={false}
                         showSearch={false}

@@ -95,8 +95,7 @@ const FeaturedMenu = () => {
                             className="w-full min-h-[465px] md:min-h-full"
                         >
                             <CardBody
-                                // className="p-0 bg-gradient-to-r from-sky-600 to-teal-400"
-                                className={cn("p-0 bg-gradient-to-r", {
+                                className={cn("p-0  bg-gradient-to-r", {
                                     "from-teal-400 to-sky-600": i === 0,
                                     "from-pink-600 to-purple-950": i === 1,
                                     "from-cyan-900 via-cyan-950 to-gray-800": i === 2,
@@ -105,7 +104,7 @@ const FeaturedMenu = () => {
                                 })}
                             >
                                 <div
-                                    className="grid grid-cols-6 md:grid-cols-12 gap-6 md:gap-4 items-center justify-center"
+                                    className="grid grid-cols-6 md:grid-cols-12 gap-6 md:gap-4 items-center justify-center "
                                 >
 
                                     <Stamp classes="absolute bottom-5 right-5 xl:bottom-10 xl:right-10 -rotate-12 rounded-xl border-white border-5 lg:border-[5px] text-center p-1 lg:p-2">

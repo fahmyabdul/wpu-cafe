@@ -212,7 +212,7 @@ const Orders = () => {
         <MainLayout title="Orders">
             <OrderView id={viewId} isOpen={modalDetail.isOpen} onOpenChange={modalDetail.onOpenChange}/>
             <OrderCreate isOpen={modalCreate.isOpen} onOpenChange={modalCreate.onOpenChange}/>
-            <div className="flex flex-col gap-5 lg:gap-10 justify-center items-center w-full xl:w-8/12 px-5 xl:px-0">
+            <div className="flex flex-col gap-5 lg:gap-10 justify-center items-center w-full xl:w-9/12 px-5 xl:px-0">
                 <h1
                         className="font-bold text-3xl text-teal-600 text-left w-full"
                     >

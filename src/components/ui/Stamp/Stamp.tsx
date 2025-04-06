@@ -1,4 +1,6 @@
 import { ReactNode } from "react";
+import { cn } from "../../../utils/cn";
+import '../../../styles/stamp.css';
 
 interface PropTypes {
     children: ReactNode;
@@ -10,13 +12,10 @@ const Stamp = (props: PropTypes) => {
 
     return (
         <div 
-            className={classes}
-            style={
-                {
-                    "maskImage": "url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/8399/grunge.png')",
-                    "maskSize": "900px 1004px"
-                }
-            }
+            className={cn(
+                "stamp",
+                classes
+            )}
         >
             {children}
         </div>
