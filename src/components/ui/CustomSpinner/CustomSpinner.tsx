@@ -1,4 +1,5 @@
-import lottieSpinner from "../../../assets/lottie-spinner2.webm";
+import { Image } from "@heroui/image";
+import lottieSpinner from "../../../assets/lottie-spinner2.gif";
 
 interface PropTypes {
     width?: number;
@@ -8,14 +9,10 @@ interface PropTypes {
 const CustomSpinner = (props: PropTypes) => {
     const {width, height} = props;
     return (
-        <video
+        <Image
             width={width}
             height={height}
             src={lottieSpinner}
-            autoPlay
-            playsInline
-            loop
-            muted
         />
     )
 };
