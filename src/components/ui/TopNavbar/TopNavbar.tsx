@@ -6,6 +6,7 @@ import useThemeSwitchStore from "../../../stores/ThemeSwitchStore";
 import useAuthStore from "../../../stores/AuthStore";
 import useOrderStore from "../../../stores/OrderStore";
 import { cn } from "../../../utils/cn";
+import { FaHouse, FaQuestion } from "react-icons/fa6";
 
 interface TopNavbarItem {
     key: string;
@@ -19,12 +20,14 @@ const listMenu = [
         key: "home",
         label: "Home",
         href: "/",
+        icon: <FaHouse/>
     },
     {
         key: "about",
         label: "About Us",
         href: "/about",
-    },
+        icon: <FaQuestion/>
+    }
 ];
 
 const TopNavbar = () => {
@@ -41,14 +44,17 @@ const TopNavbar = () => {
         deleteAccessToken();
         deleteOrderStore();
         window.location.href = "/";
-    }
+    };
 
     return (
         <Navbar 
+            id="topNavbar"
             onMenuOpenChange={setIsMenuOpen}
             maxWidth="full"
-            // isBordered
             classNames={{ 
+                base: [
+                    "shadow-md"
+                ],
                 item:[
                     "flex",
                     "relative",
@@ -72,19 +78,43 @@ const TopNavbar = () => {
             <NavbarBrand>
                 <Link href="/" className="font-semibold text-lg lg:text-xl bg-gradient-to-r bg-clip-text from-sky-600 to-teal-400 text-transparent">WPU Cafe</Link>
             </NavbarBrand>
-            <NavbarContent 
-                className="hidden sm:flex gap-6" 
-                justify="center"
-            >
+            <NavbarContent className="gap-2" justify="end">
                 {listMenu && listMenu.map((item: TopNavbarItem)=> (
-                    <NavbarItem key={"navitem"+item.key} aria-label={"navitem"+item.key} isActive={ item.href === currentLocation.pathname ? true : false }>
-                        <Link aria-current="page" className={item.href === currentLocation.pathname ? "text-teal-600" : "text-foreground"} href={item.href}>
-                            {item.label}
-                        </Link>
+                    <NavbarItem 
+                        key={"navitem"+item.key} 
+                        aria-label={"navitem"+item.key} 
+                        isActive={ item.href === currentLocation.pathname ? true : false }
+                        className="hidden sm:flex"
+                    >
+                        <Tooltip
+                            content={item.label}
+                            showArrow={true}
+                            closeDelay={1}
+                            size="sm"
+                            classNames={{
+                                base: [
+                                    // arrow color
+                                    item.href === currentLocation.pathname ? "before:bg-teal-600" : "before:bg-default",
+                                ],
+                                content: [
+                                    "py-2 px-4 shadow-xl",
+                                    item.href === currentLocation.pathname ? "text-white bg-teal-600" : "text-black dark:text-white bg-default"
+                                ],
+                            }}
+                        >
+                            <Button 
+                                as={Link} 
+                                aria-current="page" 
+                                variant="flat"
+                                className={item.href === currentLocation.pathname ? "bg-teal-600 text-white" : "text-foreground"} 
+                                href={item.href} 
+                                isIconOnly
+                            >
+                                {item.icon}
+                            </Button>
+                        </Tooltip>
                     </NavbarItem>
                 ))}
-            </NavbarContent>
-            <NavbarContent justify="end">
                 <NavbarItem className="flex items-center gap-2">
                     <Badge color="primary" content={totalData} isInvisible={accessToken ? false: true} size="md" shape="circle" variant="solid">
                         <Tooltip 
@@ -167,7 +197,7 @@ const TopNavbar = () => {
                     }
                 </NavbarItem>
             </NavbarContent>
-            <NavbarMenu>
+            <NavbarMenu className="mt-2">
                 {listMenu && listMenu.map((item: TopNavbarItem)=> (
                     <NavbarMenuItem aria-label={"navitem"+item.key} isActive={ item.href === currentLocation.pathname ? true : false }>
                         <Link aria-current="page" className={item.href === currentLocation.pathname ? "text-teal-600" : "text-foreground"} href={item.href}>
