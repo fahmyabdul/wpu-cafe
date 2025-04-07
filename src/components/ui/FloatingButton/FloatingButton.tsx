@@ -42,8 +42,9 @@ const FloatingButton = (props: PropTypes) => {
 
     return (
         <div className="hidden sm:flex flex-col fixed bottom-5 right-5 gap-2 z-10">
-            {floatingList?.map((item) => (
+            {floatingList?.map((item, index) => (
                 <Tooltip
+                    key={`floatingbutton-${index}`}
                     content={item.tooltip.content}
                     showArrow={true}
                     closeDelay={1}
@@ -61,6 +62,7 @@ const FloatingButton = (props: PropTypes) => {
                     }}
                 >
                     <Button
+                        key={`floatingbutton-btn-${index}`}
                         className={`text-tiny text-white ${item.button.color}`}
                         as={Link}
                         target={item.button.target}

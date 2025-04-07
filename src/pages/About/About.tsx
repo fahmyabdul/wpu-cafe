@@ -190,8 +190,8 @@ const About = () => {
                             </div>
                             <h1 className="font-bold mt-2">Used Tech Stack</h1>
                             <div className="grid grid-cols-2 lg:grid-rows-8 xl:grid-flow-col gap-1 text-xs xl:text-sm">
-                                {techStacks.map((item) => (
-                                    <Chip radius="sm" className={item.class}>{item.label}</Chip>
+                                {techStacks.map((item, index) => (
+                                    <Chip key={"techstack-"+index} radius="sm" className={item.class}>{item.label}</Chip>
                                 ))}
                             </div>
                         </div>
