@@ -67,7 +67,7 @@ const Login = () => {
                 </div>
                 <div className="min-w-full xl:min-w-[500px] light:border-1 light:border-gray-200 rounded-lg p-8 flex flex-col w-full mt-2 xl:mt-10">
                     <h2 className="text-teal-600 font-bold text-center text-xl xl:text-3xl mb-2">Login</h2>
-                    <p className="text-default-500 mb-5 text-sm xl:text-lg text-center">Start making your order in WPU Cafe</p>
+                    <p className="text-default-500 mb-5 text-sm xl:text-lg text-center">Start Managing Customer Orders in WPU Cafe</p>
                     <Form className="gap-5" onSubmit={handleSubmit(onSubmit)}>
                         <Input
                             {...register("email", {required: true})}
