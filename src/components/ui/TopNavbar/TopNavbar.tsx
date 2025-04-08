@@ -1,4 +1,4 @@
-import { Button, Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, Badge, Tooltip } from "@heroui/react";
+import { Button, Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, Badge, Tooltip, Switch } from "@heroui/react";
 import { HiArrowLeftStartOnRectangle, HiArrowRightEndOnRectangle, HiOutlineMoon, HiOutlineSun, HiShoppingBag } from "react-icons/hi2";
 import { JSX, useState } from "react";
 import { useLocation } from 'react-router-dom'
@@ -49,6 +49,7 @@ const TopNavbar = () => {
     return (
         <Navbar 
             id="topNavbar"
+            isBordered
             onMenuOpenChange={setIsMenuOpen}
             maxWidth="full"
             classNames={{ 
@@ -60,14 +61,6 @@ const TopNavbar = () => {
                     "relative",
                     "h-full",
                     "items-center",
-                    // "data-[active=true]:after:content-['']",
-                    // "data-[active=true]:after:absolute",
-                    // "data-[active=true]:after:bottom-0",
-                    // "data-[active=true]:after:left-0",
-                    // "data-[active=true]:after:right-0",
-                    // "data-[active=true]:after:h-[3px]",
-                    // "data-[active=true]:after:rounded-[2px]",
-                    // "data-[active=true]:after:bg-teal-600",
                 ]
             }}
         >
@@ -137,14 +130,16 @@ const TopNavbar = () => {
                             </Button>
                         </Tooltip>
                     </Badge>
-                    <Button 
-                        variant="flat" 
-                        aria-label="switch-theme" 
-                        isIconOnly
-                        onPress={() => switchTheme(!isDark)}
+                    <Switch
+                        defaultSelected
+                        color="secondary"
+                        endContent={<HiOutlineMoon />}
+                        size="lg"
+                        startContent={<HiOutlineSun />}
+                        isSelected={!isDark}
+                        onValueChange={() => switchTheme(!isDark)}
                     >
-                        {isDark ? (<HiOutlineSun size={20} />): (<HiOutlineMoon size={20} />)}
-                    </Button>
+                    </Switch>
                     {accessToken ? 
                         (
                             <Tooltip 
