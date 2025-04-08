@@ -5,7 +5,6 @@ import { useLocation } from 'react-router-dom'
 import useThemeSwitchStore from "../../../stores/ThemeSwitchStore";
 import useAuthStore from "../../../stores/AuthStore";
 import useOrderStore from "../../../stores/OrderStore";
-import { cn } from "../../../utils/cn";
 import { FaHouse, FaQuestion } from "react-icons/fa6";
 
 interface TopNavbarItem {
@@ -111,11 +110,18 @@ const TopNavbar = () => {
                 <NavbarItem className="flex items-center gap-2">
                     <Badge color="primary" content={totalData} isInvisible={accessToken ? false: true} size="md" shape="circle" variant="solid">
                         <Tooltip 
-                            content="You need to Login to order" 
-                            showArrow={accessToken ? false : true}
-                            className={cn("p-2",{
-                                "hidden after:hidden": accessToken,
-                            })}
+                            content={accessToken ? "Manage Orders" : "Login to Manage Orders"}
+                            showArrow={true}
+                            classNames={{
+                                base: [
+                                    // arrow color
+                                    currentLocation.pathname === "/orders" ? "before:bg-teal-600" : "before:bg-default",
+                                ],
+                                content: [
+                                    "py-2 px-4 shadow-xl",
+                                    currentLocation.pathname === "/orders" ? "text-white bg-teal-600" : "text-black dark:text-white bg-default"
+                                ],
+                            }}
                             closeDelay={1}
                             size="sm"
                         >
@@ -179,12 +185,17 @@ const TopNavbar = () => {
                                 classNames={{
                                     base: [
                                         // arrow color
-                                        "before:bg-teal-600",
+                                        "before:bg-slate-500",
                                     ],
-                                    content: ["py-2 px-4 shadow-xl", "text-white bg-teal-600"],
+                                    content: ["py-2 px-4 shadow-xl", "text-white bg-slate-500"],
                                 }}
                             >
-                                <Button as={Link} className="bg-teal-600 text-white hidden sm:flex" href="/login" variant="flat" isIconOnly>
+                                <Button 
+                                    as={Link} 
+                                    className="bg-slate-500 dark:bg-slate-600 text-white hidden sm:flex" 
+                                    href="/login" 
+                                    variant="flat" 
+                                    isIconOnly>
                                     <HiArrowRightEndOnRectangle size={20}/>
                                 </Button>
                             </Tooltip>
@@ -217,7 +228,7 @@ const TopNavbar = () => {
                             </Button>
                         ) : 
                         (
-                            <Button as={Link} className="bg-teal-600 text-white" href="/login" variant="flat">
+                            <Button as={Link} className="bg-slate-500 dark:bg-slate-600 text-white" href="/login" variant="flat">
                                 <HiArrowRightEndOnRectangle size={20}/> Login
                             </Button>
                         )
