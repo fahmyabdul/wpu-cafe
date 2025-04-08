@@ -98,7 +98,10 @@ const MenuCardList = (props: PropTypes) => {
                             <Button 
                                 key={index} 
                                 variant={item.value === category ? "flat" : "ghost"}
-                                onPress={() => changeCategory(item.value)} 
+                                onPress={() => {
+                                    changePage(1);
+                                    changeCategory(item.value);
+                                }} 
                                 className={cn("p-4 font-bold", {
                                     "bg-teal-600 text-white": item.value === category,
                                 })}
@@ -117,10 +120,11 @@ const MenuCardList = (props: PropTypes) => {
                         type="search"
                         isClearable
                         onClear={()=> {
-                            search("");
+                                search("");
                             }
                         }
                         onChange={(e)=> {
+                                changePage(1);
                                 search(e.target.value);
                             }
                         }
