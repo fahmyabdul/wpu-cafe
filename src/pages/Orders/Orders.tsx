@@ -11,16 +11,7 @@ import DateReformat from "../../components/ui/DateReformat";
 import { cn } from "../../utils/cn";
 import { FaRegEye, FaTrashCan } from "react-icons/fa6";
 import OrderCreate from "./OrderCreate";
-
-const COLUMN_LISTS_ORDER = [
-    {name: "No", uid: "no"},
-    {name: "Customer Name", uid: "customer_name"},
-    {name: "Table", uid: "table_number"},
-    {name: "Total", uid: "total"},
-    {name: "Status", uid: "status"},
-    {name: "Ordered At", uid: "created_at"},
-    {name: "Actions", uid: "actions"},
-]
+import { ORDER_COLUMN_LISTS } from "../../constants/orders";
 
 const Orders = () => {
     const modalDetail = useDisclosure();
@@ -220,7 +211,7 @@ const Orders = () => {
                 </h1>
                 <p className="mt-[-15px] lg:mt-[-35px] text-default-500 text-lg text-left w-full">Manage Customers Order</p>
                 <DataTable
-                    columns={COLUMN_LISTS_ORDER}
+                    columns={ORDER_COLUMN_LISTS}
                     data={!isFetching ? orders : []}
                     emptyContent={
                         !isFetching ? 

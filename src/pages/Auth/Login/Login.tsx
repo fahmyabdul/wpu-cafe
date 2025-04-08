@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, Form, Input, Link, Spinner } from "@heroui/react";
+import { addToast, Button, Form, Input, Link, Spinner } from "@heroui/react";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form"
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
@@ -7,7 +7,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { ILogin } from "../../../types/Auth";
 import useAuthStore from "../../../stores/AuthStore";
 import authServices from "../../../services/auth.service";
-import { HiExclamationTriangle } from "react-icons/hi2";
 import AuthLayout from "../../../components/layouts/AuthLayout/AuthLayout";
 import { useNavigate } from "react-router-dom";
 
@@ -48,6 +47,14 @@ const Login = () => {
                 setError("root.serverError", {
                     message: "Invalid email or password!",
                 });
+
+                addToast({
+                    title: "Unable to Login",
+                    description: "Invalid email or password!",
+                    timeout: 3000,
+                    shouldShowTimeoutProgress: true,
+                    color: "danger",
+                });
             }
         );
     };
@@ -61,13 +68,6 @@ const Login = () => {
                 <div className="min-w-full xl:min-w-[500px] light:border-1 light:border-gray-200 rounded-lg p-8 flex flex-col w-full mt-2 xl:mt-10">
                     <h2 className="text-teal-600 font-bold text-center text-xl xl:text-3xl mb-2">Login</h2>
                     <p className="text-default-500 mb-5 text-sm xl:text-lg text-center">Start making your order in WPU Cafe</p>
-                    {errors.root && 
-                        <Card className="bg-danger mb-5 text-sm text-white">
-                            <CardBody >
-                                <p className="flex items-center"><HiExclamationTriangle className="mr-2" size={20} />Invalid email or password!</p>
-                            </CardBody>
-                        </Card>
-                    }
                     <Form className="gap-5" onSubmit={handleSubmit(onSubmit)}>
                         <Input
                             {...register("email", {required: true})}

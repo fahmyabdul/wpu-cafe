@@ -33,15 +33,6 @@ const Home = () => {
                 >
                     <FeaturedMenu/>
                 </div>
-                {/* <div className="grid grid-cols-6 w-full gap-10">
-                    {MENU_CATEGORIES.map((item, index) => (
-                        <Card key={index} isPressable shadow="sm" onPress={() => console.log("item pressed")} className="hover:bg-foreground-700 hover:text-white dark:border-1 dark:border-foreground-600 dark:bg-transparent dark:hover:bg-foreground-600 dark:hover:text-black">
-                            <CardFooter className="text-small justify-center">
-                                <b>{item}</b>
-                            </CardFooter>
-                        </Card>
-                    ))}
-                </div> */}
                 <div
                     className="grid grid-cols-2 w-full"
                 >

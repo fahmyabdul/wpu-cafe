@@ -40,7 +40,7 @@ const techStacks = [
     { label: "SQLite", class: chipInactiveClass },
     { label: "GoLevelDB", class: chipInactiveClass },
     { label: "Oracle", class: chipInactiveClass },
-]
+];
 
 const About = () => {
     return (

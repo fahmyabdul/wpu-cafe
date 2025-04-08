@@ -8,7 +8,7 @@ import * as yup from "yup";
 import { FaClipboardCheck, FaClipboardList } from "react-icons/fa6";
 import useOrderStore from "../../stores/OrderStore";
 import { IOrderCart, IOrderCreate } from "../../types/Orders";
-import { ORDER_TABLES } from "../../constants/constants";
+import { ORDER_TABLES } from "../../constants/orders";
 import MenuCardList from "../../components/ui/MenuCardList";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
