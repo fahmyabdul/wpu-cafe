@@ -144,6 +144,12 @@ const TopNavbar = () => {
                         startContent={<HiOutlineSun />}
                         isSelected={!isDark}
                         onValueChange={() => switchTheme(!isDark)}
+                        classNames={{ 
+                            wrapper: [
+                                "group-data-[selected=true]:text-gray-600",
+                                "group-data-[selected=true]:bg-gray-200"
+                            ]
+                        }}
                     >
                     </Switch>
                     {accessToken ? 
