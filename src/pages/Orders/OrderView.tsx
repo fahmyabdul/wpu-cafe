@@ -109,8 +109,8 @@ export const OrderView = (props: PropTypes) => {
                 <ModalContent>
                     {isLoading ? 
                         (
-                            <div className="flex items-center justify-center w-full h-full">
-                                <CustomSpinner width={150}/>
+                            <div className="flex items-center justify-center w-full h-full rounded-xl bg-teal-600/60 dark:bg-foreground-700/30">
+                                <CustomSpinner width={200}/>
                             </div>
                         )
                         :

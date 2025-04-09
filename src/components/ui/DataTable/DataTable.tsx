@@ -44,7 +44,7 @@ const DataTable = (props: PropTypes) => {
 
     const TopContent = useMemo(() => {
         return (
-            <div className="flex  justify-between gap-y-4 flex-row items-center">
+            <div className="flex flex-row items-center justify-between gap-y-4">
                 <Input 
                     isClearable 
                     aria-label="datatable-search"
@@ -56,7 +56,7 @@ const DataTable = (props: PropTypes) => {
                 />
                 {buttonTopContentLabel && (
                     <div className="w-fit">
-                        <Button className="bg-teal-600 text-white" onPress={onClickButtonTopContent}>
+                        <Button className="text-white bg-teal-600" onPress={onClickButtonTopContent}>
                             {buttonTopContentLabel}
                         </Button>
                     </div>
@@ -133,7 +133,7 @@ const DataTable = (props: PropTypes) => {
                 columns={columns}
             >
                 {(column) => (
-                    <TableColumn key={column.uid as Key} className="text-small">
+                    <TableColumn key={column.uid as Key} className="text-white bg-teal-600 text-small">
                         {column.name as string}
                     </TableColumn>
                 )}
@@ -144,8 +144,8 @@ const DataTable = (props: PropTypes) => {
                 emptyContent={emptyContent}
                 isLoading={isLoading}
                 loadingContent={
-                    <div className="flex h-full w-full items-center justify-center bg-foreground-700/30 backdrop-blur-sm">
-                        <CustomSpinner width={150}/>
+                    <div className="flex items-center justify-center w-full h-full bg-teal-600/60 dark:bg-foreground-700/30 backdrop-blur-sm">
+                        <CustomSpinner width={300}/>
                     </div>
                 }
             >

@@ -1,5 +1,6 @@
 import { Image } from "@heroui/image";
-import lottieSpinner from "../../../assets/lottie-spinner2.gif";
+// import lottieSpinner from "../../../assets/lottie-spinner2.gif";
+import meGif from "../../../assets/wpu-my.gif";
 
 interface PropTypes {
     width?: number;
@@ -12,7 +13,7 @@ const CustomSpinner = (props: PropTypes) => {
         <Image
             width={width}
             height={height}
-            src={lottieSpinner}
+            src={meGif}
         />
     )
 };

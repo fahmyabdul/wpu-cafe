@@ -16,14 +16,15 @@ const Home = () => {
     
     return (
         <MainLayout title="">
+            <>
             <div
-                className="flex flex-col w-full pl-6 pr-6 xl:pl-0 xl:pr-0 xl:w-9/12 gap-6"
+                className="z-10 flex flex-col w-full gap-6 pl-6 pr-6 xl:pl-0 xl:pr-0 xl:w-9/12"
             >
                 <div
-                    className="flex w-full items-center"
+                    className="flex items-center w-full"
                 >
                     <h1
-                        className="font-bold text-3xl text-teal-600 dark:text-teal-500"
+                        className="text-3xl font-bold text-teal-600 dark:text-teal-500"
                     >
                         Featured
                     </h1>
@@ -34,16 +35,16 @@ const Home = () => {
                     <FeaturedMenu/>
                 </div>
                 <div
-                    className="grid grid-cols-2 w-full"
+                    className="grid w-full grid-cols-2"
                 >
-                    <div className="flex w-fit items-center">
+                    <div className="flex items-center w-fit">
                         <h1
-                            className="font-bold text-3xl text-teal-600 dark:text-teal-500"
+                            className="text-3xl font-bold text-teal-600 dark:text-teal-500"
                         >
                             Our Menus
                         </h1>
                     </div>
-                    <div className="flex justify-end w-full items-center">
+                    <div className="flex items-center justify-end w-full">
                         <Input
                             placeholder="Search in WPU Cafe"
                             aria-label="input-search"
@@ -58,7 +59,7 @@ const Home = () => {
                                 }
                             }
                             startContent={
-                                <FaMagnifyingGlass className="text-default-400 pointer-events-none flex-shrink-0 mr-2 hidden sm:flex"/>
+                                <FaMagnifyingGlass className="flex-shrink-0 hidden mr-2 pointer-events-none text-default-400 sm:flex"/>
                             }
                             className="flex w-full xl:w-9/12"
                         />
@@ -76,6 +77,7 @@ const Home = () => {
                     />
                 </div>
             </div>
+            </>
         </MainLayout>
     );
 };

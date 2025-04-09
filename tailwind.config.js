@@ -37,6 +37,11 @@ export default {
           "3px 0px 5px rgb(0, 0, 0, 0.2)",
           "-3px 0px 5px rgb(0, 0, 0, 0.2)",
         ],
+        "neon-black-sm": [
+          "0 2px 1px rgb(0, 0, 0, 0.2)",
+          "2px 0px 1px rgb(0, 0, 0, 0.2)",
+          "-2px 0px 1px rgb(0, 0, 0, 0.2)",
+        ],
         '3xl': '0 35px 35px rgba(0, 0, 0, 0.25)',
         '4xl': [
           '0 35px 35px rgba(0, 0, 0, 0.25)',

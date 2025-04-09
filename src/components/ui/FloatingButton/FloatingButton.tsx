@@ -30,18 +30,18 @@ const FloatingButton = (props: PropTypes) => {
     if (!floatingList) {
         floatingList = [
             {
-                "tooltip": {"content": "Telegram", "color": "bg-sky-500"}, 
-                "button": {"color": "bg-sky-500", "target": "blank", "href": "https://t.me/fahmyabdul", "label": <FaTelegram className="size-6"/>},
-            },
-            {
                 "tooltip": {"content": "Contact Email", "color": "bg-slate-500"}, 
                 "button": {"color": "bg-slate-500", "target": "blank", "href": "mailto:firstfahmyabdul@gmail.com", "label": <FaRegEnvelope className="size-4"/>},
+            },
+            {
+                "tooltip": {"content": "Telegram", "color": "bg-sky-500"}, 
+                "button": {"color": "bg-sky-500", "target": "blank", "href": "https://t.me/fahmyabdul", "label": <FaTelegram className="size-6"/>},
             },
         ]
     }
 
     return (
-        <div className="hidden sm:flex flex-col fixed bottom-5 right-5 gap-2 z-10">
+        <div className="fixed z-10 flex-row hidden gap-2 sm:flex bottom-5 right-5">
             {floatingList?.map((item, index) => (
                 <Tooltip
                     key={`floatingbutton-${index}`}
@@ -63,7 +63,7 @@ const FloatingButton = (props: PropTypes) => {
                 >
                     <Button
                         key={`floatingbutton-btn-${index}`}
-                        className={`text-tiny text-white ${item.button.color}`}
+                        className={`text-tiny text-white drop-shadow-neon-black-sm ${item.button.color}`}
                         as={Link}
                         target={item.button.target}
                         href={item.button.href}

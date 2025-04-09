@@ -1,4 +1,4 @@
-import { Button, Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, Badge, Tooltip, Switch } from "@heroui/react";
+import { Button, Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, Badge, Tooltip, Switch, Image } from "@heroui/react";
 import { HiArrowLeftStartOnRectangle, HiArrowRightEndOnRectangle, HiOutlineMoon, HiOutlineSun, HiShoppingBag } from "react-icons/hi2";
 import { JSX, useState } from "react";
 import { useLocation } from 'react-router-dom'
@@ -6,6 +6,9 @@ import useThemeSwitchStore from "../../../stores/ThemeSwitchStore";
 import useAuthStore from "../../../stores/AuthStore";
 import useOrderStore from "../../../stores/OrderStore";
 import { FaHouse, FaQuestion } from "react-icons/fa6";
+
+import cafeLogoLight from "../../../assets/cafe-logo-l.png";
+import cafeLogoDark from "../../../assets/cafe-logo-d.png";
 
 interface TopNavbarItem {
     key: string;
@@ -68,7 +71,14 @@ const TopNavbar = () => {
                 className="sm:hidden"
             />
             <NavbarBrand>
-                <Link href="/" className="font-semibold text-lg lg:text-xl bg-gradient-to-r bg-clip-text from-sky-600 to-teal-400 text-transparent">WPU Cafe</Link>
+                <Link href="/" className="text-lg font-semibold text-transparent lg:text-xl bg-gradient-to-r bg-clip-text from-sky-600 to-teal-400">
+                    <Image
+                        src={isDark ? cafeLogoDark : cafeLogoLight}
+                        width="90"
+                        radius="none"
+                        className="flex"
+                    />
+                </Link>
             </NavbarBrand>
             <NavbarContent className="gap-2" justify="end">
                 {listMenu && listMenu.map((item: TopNavbarItem)=> (
@@ -169,7 +179,7 @@ const TopNavbar = () => {
                             >
                                 <Button 
                                     type="button"
-                                    className="bg-danger text-white hidden sm:flex" 
+                                    className="hidden text-white bg-danger sm:flex" 
                                     onPress={
                                         ()=> {
                                             logout();
@@ -198,7 +208,7 @@ const TopNavbar = () => {
                             >
                                 <Button 
                                     as={Link} 
-                                    className="bg-slate-500 dark:bg-slate-600 text-white hidden sm:flex" 
+                                    className="hidden text-white bg-slate-500 dark:bg-slate-600 sm:flex" 
                                     href="/login" 
                                     variant="flat" 
                                     isIconOnly>
@@ -222,7 +232,7 @@ const TopNavbar = () => {
                         (
                             <Button 
                                 type="button"
-                                className="bg-danger text-white" 
+                                className="text-white bg-danger" 
                                 onPress={
                                     ()=> {
                                         logout();
@@ -234,7 +244,7 @@ const TopNavbar = () => {
                             </Button>
                         ) : 
                         (
-                            <Button as={Link} className="bg-slate-500 dark:bg-slate-600 text-white" href="/login" variant="flat">
+                            <Button as={Link} className="text-white bg-slate-500 dark:bg-slate-600" href="/login" variant="flat">
                                 <HiArrowRightEndOnRectangle size={20}/> Login
                             </Button>
                         )
