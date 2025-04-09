@@ -58,7 +58,7 @@ const Orders = () => {
                     
                     return data.data;
                 })
-                .catch(() => []);
+                .catch(() => {});
 
             return result;
         },
@@ -158,8 +158,19 @@ const Orders = () => {
                                 <DropdownItem
                                     key="detail-orders" 
                                     onPress={()=>{
-                                        setViewId(order.id as unknown as string);
-                                        modalDetail.onOpen();
+                                        console.log("Order", order);
+                                        if(order.id === "" || order.total === 0) {
+                                            addToast({
+                                                title: "Woopss something happens!",
+                                                description: "Unable to view order...",
+                                                timeout: 3000,
+                                                shouldShowTimeoutProgress: true,
+                                                color: "danger",
+                                            });
+                                        } else {
+                                            setViewId(order.id as unknown as string);
+                                            modalDetail.onOpen();
+                                        }
                                     }}
                                     textValue="View"
                                 >
@@ -203,9 +214,9 @@ const Orders = () => {
         <MainLayout title="Orders">
             <OrderView id={viewId} isOpen={modalDetail.isOpen} onOpenChange={modalDetail.onOpenChange}/>
             <OrderCreate isOpen={modalCreate.isOpen} onOpenChange={modalCreate.onOpenChange}/>
-            <div className="flex flex-col gap-5 lg:gap-10 justify-center items-center w-full xl:w-9/12 px-5 xl:px-0">
+            <div className="flex flex-col items-center justify-center w-full gap-5 px-5 lg:gap-10 xl:w-9/12 xl:px-0">
                 <h1
-                        className="font-bold text-3xl text-teal-600 text-left w-full"
+                        className="w-full text-3xl font-bold text-left text-teal-600"
                     >
                         Orders
                 </h1>
