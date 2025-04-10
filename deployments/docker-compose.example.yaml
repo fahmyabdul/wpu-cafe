@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  wpu-cafe-fe:
+    container_name: wpu-cafe-fe
+    image: fahmyabdul/wpu-cafe-fe:latest
+    restart: 'always'
+    networks:
+      - local-system
+    ports:
+      - '4173:4173'
+
+networks:
+  local-system:
+      name: local-system
+      external: true

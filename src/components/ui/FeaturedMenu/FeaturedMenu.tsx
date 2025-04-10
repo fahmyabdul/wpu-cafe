@@ -24,7 +24,8 @@ const FeaturedMenu = () => {
                     params: requestParams,
                 })
                 .then((res) => res.data)
-                .then((data) => data.data);
+                .then((data) => data.data)
+                .catch(() => {});
 
             return result;
         },
@@ -43,9 +44,9 @@ const FeaturedMenu = () => {
                 >
                     <CardBody className="p-0 bg-stone-100 dark:bg-neutral-900">
                         <div
-                            className="grid grid-cols-6 md:grid-cols-12 gap-6 md:gap-4 items-center justify-center"
+                            className="grid items-center justify-center grid-cols-6 gap-6 md:grid-cols-12 md:gap-4"
                         >
-                            <div className="relative col-span-6 md:col-span-4 p-2">
+                            <div className="relative col-span-6 p-2 md:col-span-4">
                                 <Skeleton className="rounded-lg">
                                     <Image
                                         className="w-full object-cover h-[230px] lg:h-[300px]"
@@ -55,17 +56,17 @@ const FeaturedMenu = () => {
                                     />
                                 </Skeleton>
                             </div>
-                            <div className="flex flex-col col-span-6 md:col-span-8 gap-3 ml-5 mb-10 lg:mb-0">
-                                <Skeleton className="text-2xl text-bold w-4/12 h-6">
+                            <div className="flex flex-col col-span-6 gap-3 mb-10 ml-5 md:col-span-8 lg:mb-0">
+                                <Skeleton className="w-4/12 h-6 text-2xl text-bold">
                                     <h1 className="text-2xl font-bold">Name</h1>
                                 </Skeleton>
-                                <Skeleton className="text-2xl text-vold w-2/12 h-6">
-                                    <p className="text-default-500 text-lg lg:text-xl">
+                                <Skeleton className="w-2/12 h-6 text-2xl text-vold">
+                                    <p className="text-lg text-default-500 lg:text-xl">
                                         Only&nbsp;
-                                        <span className="text-teal-600 font-bold">$0</span>
+                                        <span className="font-bold text-teal-600">$0</span>
                                     </p>
                                 </Skeleton>
-                                <Skeleton className="text-lg w-10/12">
+                                <Skeleton className="w-10/12 text-lg">
                                 <p className="text-lg">
                                     Description
                                 </p>
@@ -85,7 +86,7 @@ const FeaturedMenu = () => {
                 pagination={{ clickable: true }}
                 onSwiper={(swiper) => console.log(swiper)}
             >
-                {!isLoading && menus.map((item: IMenu, i: number)=>(
+                {!isLoading && menus && menus.map((item: IMenu, i: number)=>(
                     <SwiperSlide>
                         <Card
                             key={item.id}
@@ -104,13 +105,13 @@ const FeaturedMenu = () => {
                                 })}
                             >
                                 <div
-                                    className="grid grid-cols-6 md:grid-cols-12 gap-6 md:gap-4 items-center justify-center "
+                                    className="grid items-center justify-center grid-cols-6 gap-6 md:grid-cols-12 md:gap-4 "
                                 >
 
                                     <Stamp classes="absolute bottom-5 right-5 xl:bottom-10 xl:right-10 -rotate-12 rounded-xl border-white border-5 lg:border-[5px] text-center p-1 lg:p-2">
-                                        <span className="text-white text-sm lg:text-2xl font-bold">TASTY!!!</span>
+                                        <span className="text-sm font-bold text-white lg:text-2xl">TASTY!!!</span>
                                     </Stamp>
-                                    <div className="relative col-span-6 md:col-span-4 p-2">
+                                    <div className="relative col-span-6 p-2 md:col-span-4">
                                         <Image
                                             alt={item.name}
                                             className="w-full object-cover h-[230px] lg:h-[300px]"
@@ -120,11 +121,11 @@ const FeaturedMenu = () => {
                                             width="100%"
                                         />
                                     </div>
-                                    <div className="flex flex-col col-span-6 md:col-span-8 gap-3 ml-5 mb-10 mt-2 lg:mb-0 text-white z-10">
+                                    <div className="z-10 flex flex-col col-span-6 gap-3 mt-2 mb-10 ml-5 text-white md:col-span-8 lg:mb-0">
                                         <h1 className="text-3xl font-bold">{item.name}</h1>
-                                        <p className=" text-xl lg:text-2xl">
+                                        <p className="text-xl lg:text-2xl">
                                             Only&nbsp;
-                                            <span className=" font-bold">${item.price}</span>
+                                            <span className="font-bold ">${item.price}</span>
                                         </p>
                                         <p className="text-lg">
                                             {item.description}
