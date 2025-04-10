@@ -223,7 +223,7 @@ const Orders = () => {
                 <p className="mt-[-15px] lg:mt-[-35px] text-default-500 text-lg text-left w-full">Manage Customers Order</p>
                 <DataTable
                     columns={ORDER_COLUMN_LISTS}
-                    data={!isFetching ? orders : []}
+                    data={!isFetching && orders ? orders : []}
                     emptyContent={
                         !isFetching ? 
                         (
