@@ -1,4 +1,4 @@
-import { addToast, Button, Form, Input, Link, Spinner } from "@heroui/react";
+import { addToast, Button, Form, Image, Input, Link, Spinner } from "@heroui/react";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form"
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
@@ -10,12 +10,17 @@ import authServices from "../../../services/auth.service";
 import AuthLayout from "../../../components/layouts/AuthLayout/AuthLayout";
 import { useNavigate } from "react-router-dom";
 
+import cafeLogoLight from "../../../assets/cafe-logo-l.png";
+import cafeLogoDark from "../../../assets/cafe-logo-d.png";
+import useThemeSwitchStore from "../../../stores/ThemeSwitchStore";
+
 const Login = () => {
     const navigate = useNavigate();
     const [isVisible, setIsVisible] = useState(false);
     const [isLogin, setIsLogin] = useState(false);
     const toggleVisibility = () => setIsVisible(!isVisible);
     const { setAccessToken, deleteAccessToken } = useAuthStore();
+    const { isDark } = useThemeSwitchStore();
 
     const loginValidator = yup.object().shape({
         email: yup.string().email("Please input a valid email").required("Please input your email"),
@@ -61,13 +66,17 @@ const Login = () => {
 
     return (
         <AuthLayout title="Login">
-            <div className="grid grid-cols-1 xl:grid-cols-2 w-full xl:w-7/12 justify-center items-center">
+            <div className="grid items-center justify-center w-full grid-cols-1 xl:grid-cols-2 xl:w-7/12">
                 <div className="items-center justify-center text-center">
-                    <span className="font-semibold text-3xl xl:text-7xl bg-gradient-to-r bg-clip-text from-sky-600 to-teal-400 text-transparent">WPU Cafe</span>
+                    <Image
+                        src={isDark ? cafeLogoDark : cafeLogoLight}
+                        radius="none"
+                        className="flex mx-auto w-[40%] xl:w-[90%]"
+                    />
                 </div>
-                <div className="min-w-full xl:min-w-[500px] light:border-1 light:border-gray-200 rounded-lg p-8 flex flex-col w-full mt-2 xl:mt-10">
-                    <h2 className="text-teal-600 font-bold text-center text-xl xl:text-3xl mb-2">Login</h2>
-                    <p className="text-default-500 mb-5 text-sm xl:text-lg text-center">Start Managing Customer Orders in WPU Cafe</p>
+                <div className="min-w-full xl:min-w-[500px] light:border-1 light:border-gray-200 rounded-lg p-8 flex flex-col w-full xl:mt-10">
+                    <h2 className="mb-2 text-xl font-bold text-center text-teal-600 dark:text-white xl:text-3xl">Login</h2>
+                    <p className="mb-5 text-sm text-center text-default-500 xl:text-lg">Start Managing Customer Orders in WPU Cafe</p>
                     <Form className="gap-5" onSubmit={handleSubmit(onSubmit)}>
                         <Input
                             {...register("email", {required: true})}
@@ -94,16 +103,16 @@ const Login = () => {
                                         onClick={toggleVisibility}
                                     >
                                         {isVisible ? (
-                                            <FaEyeSlash className="text-xl text-default-400 pointer-events-none" />
+                                            <FaEyeSlash className="text-xl pointer-events-none text-default-400" />
                                         ) : (
-                                            <FaEye className="text-xl text-default-400 pointer-events-none" />
+                                            <FaEye className="text-xl pointer-events-none text-default-400" />
                                         )}
                                     </button>
                                 </div>
                             }
                         />
                         <Button 
-                            className="bg-teal-600 text-white text-md xl:text-lg mt-2"
+                            className="mt-2 text-white bg-teal-600 text-md xl:text-lg"
                             size="lg"
                             variant="solid"
                             type="submit"
@@ -116,8 +125,8 @@ const Login = () => {
                             }
                         </Button>
                     </Form>
-                    <p className="text-xs text-gray-500 dark:text-gray-300 mt-5 mb-3 text-center">If you find any trouble please contact <Link href="mailto:firstfahmyabdul@gmail.com" className="text-xs text-teal-600">Support Email</Link></p>
-                    <Link href="/" className="text-teal-600 font-bold dark:text-default-500 text-xs justify-center">
+                    <p className="mt-5 mb-3 text-xs text-center text-gray-500 dark:text-gray-300">If you find any trouble please contact <Link href="mailto:firstfahmyabdul@gmail.com" className="text-xs text-teal-600">Support Email</Link></p>
+                    <Link href="/" className="justify-center text-xs font-bold text-teal-600 dark:text-default-500">
                         Back to Home
                     </Link>
                 </div>
