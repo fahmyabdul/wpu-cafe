@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview --host",
-    "docker-build": "docker build --build-arg VITE_API_URL=$VITE_API_URL -t fahmyabdul/wpu-cafe-fe:latest -f Dockerfile . && docker push fahmyabdul/wpu-cafe-fe:latest"
+    "docker-build": "docker build --platform=linux/amd64 --build-arg VITE_API_URL=$VITE_API_URL -t fahmyabdul/wpu-cafe-fe:latest -f Dockerfile . && docker push fahmyabdul/wpu-cafe-fe:latest"
   },
   "dependencies": {
     "@heroui/react": "^2.7.5",

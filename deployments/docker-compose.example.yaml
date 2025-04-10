@@ -2,6 +2,7 @@ version: '3'
 
 services:
   wpu-cafe-fe:
+    platform: linux/amd64
     container_name: wpu-cafe-fe
     image: fahmyabdul/wpu-cafe-fe:latest
     restart: 'always'
