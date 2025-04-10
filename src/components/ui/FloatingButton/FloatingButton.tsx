@@ -31,7 +31,7 @@ const FloatingButton = (props: PropTypes) => {
     if (!floatingList) {
         floatingList = [
             {
-                "tooltip": {"content": "Try our 404 Page", "base": "before:bg-red-500", "color": "bg-red-500"}, 
+                "tooltip": {"content": "See our 404 Page", "base": "before:bg-red-500", "color": "bg-red-500"}, 
                 "button": {"color": "bg-red-500", "target": "blank", "href": "/asal", "label": <b>404</b>},
             },
             {

@@ -36,12 +36,12 @@ const MainLayout = (props: PropTypes) => {
             <Image
                     src={isDark ? bgCafeLeftDark : bgCafeLeftLight}
                     width="11%"
-                    className="fixed z-0 hidden -right-4 bottom-0 xl:flex scale-x-[-1]"
+                    className="fixed z-0 hidden -right-3 bottom-0 xl:flex scale-x-[-1]"
             />
             <Image
                     src={isDark ? bgCafeRightDark : bgCafeRightLight}
                     width="9%"
-                    className="fixed z-0 hidden -left-1 -bottom-1 xl:flex scale-x-[-1]"
+                    className="fixed z-0 hidden -left-0 -bottom-1 xl:flex scale-x-[-1]"
             />
             </>
             <div className="z-10 flex flex-col items-center mt-5 mb-5 lg:mt-8 lg:mb-8">
