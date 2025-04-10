@@ -46,7 +46,7 @@ const About = () => {
     return (
         <MainLayout title="About Us">
             <div className="flex flex-col items-center justify-center w-full gap-5 lg:gap-10 xl:w-9/12 bg-radial-gradient">
-                <h1 className="mt-4 mb-0 text-4xl font-bold text-transparent bg-gradient-to-r bg-clip-text from-sky-600 to-teal-400 lg:mt-0">About Us</h1>
+                <h1 className="mt-4 mb-0 text-4xl font-bold text-teal-600 dark:text-white lg:mt-0">About Us</h1>
                 <span className="mt-[-15px] lg:mt-[-35px] text-default-500 text-lg">What You Need To Know About Us</span>
                 <div className="grid items-start w-full grid-cols-1 gap-10 p-5 xl:grid-cols-2 xl:p-0">
                     <div className="flex justify-center mt-2">

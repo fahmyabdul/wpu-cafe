@@ -71,7 +71,7 @@ const Login = () => {
                     <Image
                         src={isDark ? cafeLogoDark : cafeLogoLight}
                         radius="none"
-                        className="flex mx-auto w-[40%] xl:w-[90%]"
+                        className="flex mx-auto w-[60%] xl:w-[90%]"
                     />
                 </div>
                 <div className="min-w-full xl:min-w-[500px] light:border-1 light:border-gray-200 rounded-lg p-8 flex flex-col w-full xl:mt-10">

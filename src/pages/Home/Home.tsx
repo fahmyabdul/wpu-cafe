@@ -24,7 +24,7 @@ const Home = () => {
                     className="flex items-center w-full"
                 >
                     <h1
-                        className="text-3xl font-bold text-teal-600 dark:text-teal-500"
+                        className="text-3xl font-bold text-teal-600 dark:text-white"
                     >
                         Featured
                     </h1>
@@ -39,7 +39,7 @@ const Home = () => {
                 >
                     <div className="flex items-center w-fit">
                         <h1
-                            className="text-3xl font-bold text-teal-600 dark:text-teal-500"
+                            className="text-3xl font-bold text-teal-600 dark:text-white"
                         >
                             Our Menus
                         </h1>

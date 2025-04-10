@@ -74,7 +74,7 @@ const TopNavbar = () => {
                 <Link href="/" className="text-lg font-semibold text-transparent lg:text-xl bg-gradient-to-r bg-clip-text from-sky-600 to-teal-400">
                     <Image
                         src={isDark ? cafeLogoDark : cafeLogoLight}
-                        width="90"
+                        width="150"
                         radius="none"
                         className="flex"
                     />
