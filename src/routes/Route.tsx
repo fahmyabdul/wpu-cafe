@@ -5,7 +5,6 @@ import About from "../pages/About";
 import Login from "../pages/Auth/Login";
 import Orders from "../pages/Orders";
 import Page404 from "../pages/Errors/404";
-// import Menu from "../pages/Menu";
 
 const routes: RouteObject[] = [
     {

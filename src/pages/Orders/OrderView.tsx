@@ -1,4 +1,4 @@
-import { addToast, Button, ButtonGroup, Card, CardBody, Chip, Image, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/react";
+import { addToast, Button, Card, CardBody, Chip, Image, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/react";
 import { useQuery } from "@tanstack/react-query";
 import ordersServices from "../../services/orders.service";
 import CustomSpinner from "../../components/ui/CustomSpinner";
@@ -8,7 +8,7 @@ import { cn } from "../../utils/cn";
 import DateReformat from "../../components/ui/DateReformat";
 import useOrderStore from "../../stores/OrderStore";
 import Stamp from "../../components/ui/Stamp";
-import { FaReceipt, FaRegEye, FaTrashCan } from "react-icons/fa6";
+import { FaRegEye, FaTrashCan } from "react-icons/fa6";
 
 interface PropTypes {
     id: string,
@@ -234,32 +234,18 @@ export const OrderView = (props: PropTypes) => {
                                         <ModalFooter className="mt-2">
                                             {orderDetail.status === "COMPLETED" ? 
                                             (
-                                                <ButtonGroup
+                                                <Button 
+                                                    color="primary" 
+                                                    onPress={() => {
+                                                        doDeleteOrder(orderDetail.id);
+                                                        onClose();
+                                                    }}
+                                                    className="gap-2 bg-danger"
+                                                    size="lg"
                                                     fullWidth
                                                 >
-                                                    <Button 
-                                                        color="primary" 
-                                                        onPress={() => {
-                                                            doDeleteOrder(orderDetail.id);
-                                                            onClose();
-                                                        }}
-                                                        className="gap-2 bg-gray-500"
-                                                        size="lg"
-                                                    >
-                                                        <FaReceipt />Print Invoice
-                                                    </Button>
-                                                    <Button 
-                                                        color="primary" 
-                                                        onPress={() => {
-                                                            doDeleteOrder(orderDetail.id);
-                                                            onClose();
-                                                        }}
-                                                        className="gap-2 bg-danger"
-                                                        size="lg"
-                                                    >
-                                                        <FaTrashCan />Delete Order
-                                                    </Button>
-                                                </ButtonGroup>
+                                                    <FaTrashCan />Delete Order
+                                                </Button>
                                             )
                                             :
                                             (
