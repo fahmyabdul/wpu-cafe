@@ -1,4 +1,4 @@
-import { addToast, Button, Chip, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Spinner, useDisclosure } from "@heroui/react";
+import { addToast, Button, Chip, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Select, SelectItem, Spinner, useDisclosure } from "@heroui/react";
 import { Key, ReactNode, useCallback, useState } from "react";
 import { HiCheckBadge, HiEllipsisVertical, HiMiniFaceFrown, HiMiniPlusCircle } from "react-icons/hi2";
 import { useQuery } from "@tanstack/react-query";
@@ -11,7 +11,7 @@ import DateReformat from "../../components/ui/DateReformat";
 import { cn } from "../../utils/cn";
 import { FaRegEye, FaTrashCan } from "react-icons/fa6";
 import OrderCreate from "./OrderCreate";
-import { ORDER_COLUMN_LISTS } from "../../constants/orders";
+import { COLUMN_STATUS_LISTS, ORDER_COLUMN_LISTS, SORT_BY_LISTS, SORT_ORDER_LISTS } from "../../constants/orders";
 
 const Orders = () => {
     const modalDetail = useDisclosure();
@@ -23,6 +23,7 @@ const Orders = () => {
         inputSearch,
         page,
         pageSize,
+        status,
         sortBy,
         sortOrder,
         totalData,
@@ -30,13 +31,18 @@ const Orders = () => {
         search,
         changePage,
         changePageSize,
+        changeStatus,
+        changeSortBy,
+        changeSortOrder,
         changeTotalData,
         doReloadOrder,
     } = useOrderStore();
     
-    let requestParams = {
+    const requestParams = {
+        search: inputSearch,
         page: page,
         pageSize: pageSize,
+        status: status,
         sortBy: sortBy,
         sortOrder: sortOrder
     };
@@ -45,12 +51,8 @@ const Orders = () => {
         data: orders,
         isFetching,
     } = useQuery({
-        queryKey: ["dataOrder", inputSearch, requestParams, reloadOrder],
+        queryKey: ["dataOrder", requestParams, reloadOrder],
         queryFn: async () => {
-            if (inputSearch !== "") {
-                requestParams = Object.assign(requestParams, {search: inputSearch});
-            }
-
             const result = await ordersServices.getAll(requestParams)
                 .then((res) => res.data)
                 .then((data) => {
@@ -216,7 +218,7 @@ const Orders = () => {
             <OrderCreate isOpen={modalCreate.isOpen} onOpenChange={modalCreate.onOpenChange}/>
             <div className="flex flex-col items-center justify-center w-full gap-5 px-5 lg:gap-10 xl:w-9/12 xl:px-0">
                 <h1
-                        className="w-full text-3xl font-bold text-left text-teal-600"
+                        className="w-full text-3xl font-bold text-left text-teal-600 dark:text-white"
                     >
                         Orders
                 </h1>
@@ -234,17 +236,88 @@ const Orders = () => {
                             <Spinner color="success" variant="wave" />
                         )
                     }
-                    buttonTopContentLabel={
+                    rightTopContent={
                         <>
-                            <HiMiniPlusCircle size={20}/>Order
+                            <Button className="text-white bg-teal-600" onPress={
+                                () => {
+                                    modalCreate.onOpen();
+                                }
+                            }>
+                                <HiMiniPlusCircle size={20}/>Order
+                            </Button>
                         </>
+                    }
+                    columnFilterContent={
+                        <div className="flex-row hidden gap-2 md:flex">
+                            <Select
+                                aria-label="datatable-status-filter"
+                                className="min-w-[150px]"
+                                startContent={<p className="text-small text-nowrap">Status:</p>}
+                                selectionMode="single"
+                                selectedKeys={[status as unknown as string]}
+                                size="md"
+                                onChange={(e) => {
+                                    changePage(1);
+                                    changeStatus(e.target.value as unknown as string)
+                                }}
+                            >
+                                {COLUMN_STATUS_LISTS.map((item) => (
+                                    <SelectItem
+                                        key={item.value}
+                                    >
+                                        {item.label}
+                                    </SelectItem>
+                                ))}
+                            </Select>
+                        </div>
+                    }
+                    bottomFilterContent={
+                        <div className="flex-row hidden gap-2 lg:flex">
+                            <Select
+                                aria-label="datatable-sortby-filter"
+                                className="min-w-[180px]"
+                                startContent={<p className="text-small text-nowrap">Sort By:</p>}
+                                selectionMode="single"
+                                selectedKeys={[sortBy as unknown as string]}
+                                size="md"
+                                onChange={(e) => {
+                                    changePage(1);
+                                    changeSortBy(e.target.value as unknown as string)
+                                }}
+                            >
+                                {SORT_BY_LISTS.map((item) => (
+                                    <SelectItem
+                                        key={item.value}
+                                    >
+                                        {item.label}
+                                    </SelectItem>
+                                ))}
+                            </Select>
+                            <Select
+                                aria-label="datatable-sortorder-filter"
+                                className="min-w-[180px]"
+                                startContent={<p className="text-small text-nowrap">Order:</p>}
+                                selectionMode="single"
+                                selectedKeys={[sortOrder as unknown as string]}
+                                size="md"
+                                onChange={(e) => {
+                                    changePage(1);
+                                    changeSortOrder(e.target.value as unknown as string)
+                                }}
+                            >
+                                {SORT_ORDER_LISTS.map((item) => (
+                                    <SelectItem
+                                        key={item.value}
+                                    >
+                                        {item.label}
+                                    </SelectItem>
+                                ))}
+                            </Select>
+                        </div>
                     }
                     searchPlaceholder="Search by Customer Name"
                     onChangeSearch={(e) => { search(e.target.value)}}
                     onClearSearch={() => { search("")}}
-                    onClickButtonTopContent={() => {
-                        modalCreate.onOpen();
-                    }}
                     renderCell={renderCell}
                     limit={pageSize}
                     onChangeLimit={(e) => {

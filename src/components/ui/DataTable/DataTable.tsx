@@ -1,4 +1,4 @@
-import { Button, Input, Pagination, Select, SelectItem, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react";
+import { Input, Pagination, Select, SelectItem, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react";
 import { ChangeEvent, Key, ReactNode, useMemo } from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { cn } from "../../../utils/cn";
@@ -11,11 +11,12 @@ interface PropTypes {
     data: Record<string, unknown>[];
     currentPage: number;
     totalPages: number;
-    buttonTopContentLabel?: ReactNode;
+    rightTopContent?: ReactNode;
     searchPlaceholder?: string;
+    columnFilterContent?: ReactNode;
+    bottomFilterContent?: ReactNode;
     onChangeSearch: (e: ChangeEvent<HTMLInputElement>) => void;
     onClearSearch: () => void;
-    onClickButtonTopContent?: () => void;
     onChangeLimit: (e: ChangeEvent<HTMLSelectElement>) => void;
     onChangePage: (page: number) => void;
     isLoading?: boolean;
@@ -28,23 +29,24 @@ const DataTable = (props: PropTypes) => {
         columns, 
         data, 
         limit,
-        buttonTopContentLabel, 
+        rightTopContent, 
         onChangeLimit,
         searchPlaceholder,
         onChangeSearch, 
         onClearSearch, 
-        onClickButtonTopContent, 
         totalPages,
         onChangePage,
         currentPage,
         emptyContent,
         isLoading,
+        columnFilterContent,
+        bottomFilterContent,
         renderCell,
     } = props;
 
     const TopContent = useMemo(() => {
         return (
-            <div className="flex flex-row items-center justify-between gap-y-4">
+            <div className="flex flex-row items-center justify-between ">
                 <Input 
                     isClearable 
                     aria-label="datatable-search"
@@ -54,43 +56,51 @@ const DataTable = (props: PropTypes) => {
                     onClear={onClearSearch}
                     onChange={onChangeSearch}
                 />
-                {buttonTopContentLabel && (
-                    <div className="w-fit">
-                        <Button className="text-white bg-teal-600" onPress={onClickButtonTopContent}>
-                            {buttonTopContentLabel}
-                        </Button>
-                    </div>
-                )}
+                <div className="flex flex-row gap-2">
+                    {columnFilterContent && (
+                        <div className="w-fit">
+                            { columnFilterContent }
+                        </div>
+                    )}
+                    {rightTopContent && (
+                        <div className="w-fit">
+                            {rightTopContent}
+                        </div>
+                    )}
+                </div>
             </div>
         )
     }, [
-        buttonTopContentLabel, 
+        rightTopContent, 
         searchPlaceholder,
         onChangeSearch, 
         onClearSearch, 
-        onClickButtonTopContent,
+        columnFilterContent,
     ]);
 
     const BottomContent = useMemo(() => {
         return (
             <div className="flex items-center justify-center px-2 py-2 lg:justify-between">
-                <Select
-                    aria-label="datatable-select"
-                    className="hidden max-w-36 lg:block"
-                    size="md"
-                    selectedKeys={[limit]}
-                    selectionMode="single"
-                    onChange={onChangeLimit}
-                    startContent={<p className="text-small">Show:</p>}
-                >
-                    {LIMIT_LISTS.map((item) => (
-                        <SelectItem
-                            key={item.value}
-                        >
-                            {item.label}
-                        </SelectItem>
-                    ))}
-                </Select>
+                <div className="flex flex-row gap-2">
+                    <Select
+                        aria-label="datatable-select"
+                        className="hidden min-w-28 lg:block"
+                        size="md"
+                        selectedKeys={[limit]}
+                        selectionMode="single"
+                        onChange={onChangeLimit}
+                        startContent={<p className="text-small">Show:</p>}
+                    >
+                        {LIMIT_LISTS.map((item) => (
+                            <SelectItem
+                                key={item.value}
+                            >
+                                {item.label}
+                            </SelectItem>
+                        ))}
+                    </Select>
+                    {bottomFilterContent && bottomFilterContent}
+                </div>
                 <Pagination 
                     aria-label="datatable-pagination"
                     isCompact 
@@ -112,6 +122,7 @@ const DataTable = (props: PropTypes) => {
         totalPages,
         onChangeLimit,
         onChangePage,
+        bottomFilterContent,
     ]);
 
     return (

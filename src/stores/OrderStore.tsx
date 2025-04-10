@@ -7,6 +7,7 @@ interface IOrderStore {
     inputSearch?: string;
     page: number;
     pageSize: string;
+    status?: string;
     sortBy: string;
     sortOrder: string;
     totalData: number;
@@ -14,6 +15,9 @@ interface IOrderStore {
     carts: IOrderCart[];
     grandTotal: number;
     search: (input: string) => void;
+    changeStatus: (input: string) => void;
+    changeSortBy: (input?: string) => void;
+    changeSortOrder: (input?: string) => void;
     changePage: (input?: number) => void;
     changePageSize: (input?: string) => void;
     changeTotalData: (input?: number) => void;
@@ -30,6 +34,7 @@ const useOrderStore = create<IOrderStore>()(
             inputSearch: "",
             page: 1,
             pageSize: LIMIT_LISTS[0].label,
+            status: "",
             sortBy: "created_at",
             sortOrder: "desc",
             totalData: 0,
@@ -40,6 +45,27 @@ const useOrderStore = create<IOrderStore>()(
                 () => (
                     { 
                         inputSearch: input 
+                    }
+                )
+            ),
+            changeStatus: (input: string) => set(
+                () => (
+                    { 
+                        status: input 
+                    }
+                )
+            ),
+            changeSortBy: (input?: string) => set(
+                () => (
+                    { 
+                        sortBy: input 
+                    }
+                )
+            ),
+            changeSortOrder: (input?: string) => set(
+                () => (
+                    { 
+                        sortOrder: input 
                     }
                 )
             ),
