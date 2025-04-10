@@ -6,6 +6,7 @@ import { FaRegEnvelope, FaTelegram } from "react-icons/fa6";
 
 interface IFloatingButtonTooltip {
     content: string;
+    base: string;
     color: string;
 }
 interface IFloatingButtonButton {
@@ -30,11 +31,15 @@ const FloatingButton = (props: PropTypes) => {
     if (!floatingList) {
         floatingList = [
             {
-                "tooltip": {"content": "Contact Email", "color": "bg-slate-500"}, 
+                "tooltip": {"content": "Try our 404 Page", "base": "before:bg-red-500", "color": "bg-red-500"}, 
+                "button": {"color": "bg-red-500", "target": "blank", "href": "/asal", "label": <b>404</b>},
+            },
+            {
+                "tooltip": {"content": "Contact Email", "base": "before:bg-slate-500", "color": "bg-slate-500"}, 
                 "button": {"color": "bg-slate-500", "target": "blank", "href": "mailto:firstfahmyabdul@gmail.com", "label": <FaRegEnvelope className="size-4"/>},
             },
             {
-                "tooltip": {"content": "Telegram", "color": "bg-sky-500"}, 
+                "tooltip": {"content": "Telegram", "base": "before:bg-sky-500", "color": "bg-sky-500"}, 
                 "button": {"color": "bg-sky-500", "target": "blank", "href": "https://t.me/fahmyabdul", "label": <FaTelegram className="size-6"/>},
             },
         ]
@@ -46,14 +51,14 @@ const FloatingButton = (props: PropTypes) => {
                 <Tooltip
                     key={`floatingbutton-${index}`}
                     content={item.tooltip.content}
-                    showArrow={true}
+                    showArrow={false}
                     closeDelay={1}
-                    placement="left"
+                    placement="top"
                     size="sm"
                     classNames={{
                         base: [
                             // arrow color
-                            `before:${item.tooltip.color}`,
+                            `${item.tooltip.base}`,
                         ],
                         content: [
                             "py-2 px-4 shadow-xl",
