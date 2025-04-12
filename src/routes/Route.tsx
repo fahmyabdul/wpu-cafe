@@ -5,6 +5,7 @@ import About from "../pages/About";
 import Login from "../pages/Auth/Login";
 import Orders from "../pages/Orders";
 import Page404 from "../pages/Errors/404";
+import OrderInvoice from "../pages/Orders/OrderInvoice";
 
 const routes: RouteObject[] = [
     {
@@ -28,6 +29,14 @@ const routes: RouteObject[] = [
         element: (
             <ProtectedRoute>
                 <Orders/>
+            </ProtectedRoute>
+        ),
+    },
+    {
+        path:"/orders/:id/invoice",
+        element: (
+            <ProtectedRoute>
+                <OrderInvoice/>
             </ProtectedRoute>
         ),
     },
