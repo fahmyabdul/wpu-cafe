@@ -1,4 +1,4 @@
-import { addToast, Button, Chip, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Select, SelectItem, Spinner, useDisclosure } from "@heroui/react";
+import { addToast, Button, Chip, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Link, Select, SelectItem, Spinner, useDisclosure } from "@heroui/react";
 import { Key, ReactNode, useCallback, useState } from "react";
 import { HiCheckBadge, HiEllipsisVertical, HiMiniFaceFrown, HiMiniPlusCircle } from "react-icons/hi2";
 import { useQuery } from "@tanstack/react-query";
@@ -9,7 +9,7 @@ import DataTable from "../../components/ui/DataTable";
 import { OrderView } from "./OrderView";
 import DateReformat from "../../components/ui/DateReformat";
 import { cn } from "../../utils/cn";
-import { FaRegEye, FaTrashCan } from "react-icons/fa6";
+import { FaReceipt, FaRegEye, FaTrashCan } from "react-icons/fa6";
 import OrderCreate from "./OrderCreate";
 import { COLUMN_STATUS_LISTS, ORDER_COLUMN_LISTS, SORT_BY_LISTS, SORT_ORDER_LISTS } from "../../constants/orders";
 
@@ -180,6 +180,7 @@ const Orders = () => {
                                 </DropdownItem>
                                 {order.status === "COMPLETED" ? 
                                     (
+                                        <>
                                         <DropdownItem 
                                             key="delete-orders"
                                             onPress={() => {
@@ -189,6 +190,15 @@ const Orders = () => {
                                         >
                                             <p className="flex items-center justify-start text-danger"><FaTrashCan size={16} />&nbsp;Delete</p>
                                         </DropdownItem>
+                                        <DropdownItem
+                                            key="print-invoice"
+                                            as={Link}
+                                            href={`/orders/${order.id}/invoice`}
+                                            target="_blank"
+                                        >
+                                            <p className="flex items-center justify-start text-primary"><FaReceipt size={16} />&nbsp;Print Invoice</p>
+                                        </DropdownItem>
+                                        </>
                                     )
                                     :
                                     (
