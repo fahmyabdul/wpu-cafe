@@ -133,7 +133,7 @@ const OrderInvoice = () => {
                     </section>
                 )
             }
-            {!isLoading && !orderDetail && 
+            {!isLoading && (!orderDetail || orderDetail.status !== "COMPLETED") && 
                 (
                     <Navigate to="/notfound"/>
                 )
