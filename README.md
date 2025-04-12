@@ -5,7 +5,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/fahmyabdul">
-    <img src="https://raw.githubusercontent.com/fahmyabdul/fahmyabdul.github.io/main/assets/img/flg-round.png" alt="Logo" width="100" height="100">
+    <img src="src/assets/cafe-logo-l.png" alt="Logo" width="300">
   </a>
   
 
@@ -102,7 +102,7 @@ To run this application via **Docker**, you can use [this docker compose file](d
 
 After that you will see the container logs in your terminal.
 
-To stop the container, simply push `CTRL+C` inside your terminal.
+To stop the container, simply press `CTRL+C` inside your terminal.
 
 If you want to run the container in **detached mode**, simply add `-d` params to the docker compose command like this:
 
